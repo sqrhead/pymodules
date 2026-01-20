@@ -4,6 +4,6 @@
 - docstrings
 - #! (shebang)
 - self keyword
+- classmethod(), staticmethod()
 ## Info
 - check if i can use constructor before
-- see how retarded these motherfuckers can be
