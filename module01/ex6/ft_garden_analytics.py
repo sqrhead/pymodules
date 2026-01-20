@@ -1,19 +1,17 @@
 """ Basic Plant class"""
 class Plant:
-    name: str
-    height: int
-    age: int
     def __init__(self, name, age, height):
         self.name = name
         self.age = age
         self.height = height
+        self.type: str = "Plant"
     """ Grow function to make grow the plants"""
     def grow(self) -> None:
         self.height = self.height + 1
         print(f"{self.name} grew 1cm")
 
     def log(self) -> None:
-        print(f"- {self.name}: {self.height}")
+        print(f"- {self.name}: {self.height}cm")
 
 """ FloweringPlant class  """
 class FloweringPlant(Plant):
@@ -23,19 +21,20 @@ class FloweringPlant(Plant):
         super().__init__(name, age, height)
         self.color = color
         self.status = status
-
+        self.type: str = "FloweringPlant"
     def log(self) -> None:
-        print(f"- {self.name}: {self.height}, {self.color} flowers ({self.status})")
+        print(f"- {self.name}: {self.height}cm, {self.color} flowers ({self.status})")
 
 """ PrizeFlower class  """
 class PrizeFlower(FloweringPlant):
     prize_points: int
     def __init__(self, name, age, height, color, status, prize_points):
         super().__init__(name, age, height, color, status)
-        self.prize_points = prize_points
+        self.prize_points: int = prize_points
+        self.type: str = "PrizeFlower"
 
     def log(self) -> None:
-        print(f"- {self.name}: {self.height}, {self.color} flowers ({self.status}), Prize points: {self.prize_points}")
+        print(f"- {self.name}: {self.height}cm, {self.color} flowers ({self.status}), Prize points: {self.prize_points}")
 
 """ GardenManager class used to manage a gardens duh"""
 class GardenManager:
@@ -44,30 +43,48 @@ class GardenManager:
         print("=== Garden Management System Demo ===\n")
         self.gardens: dict[str, list[Plant]] = {} # initialization needed to not get an error
         self.gardens_number: int = 0
+        self.growth_counter: int = 0
+        self.regular_counter: int = 0
+        self.flowering_counter: int = 0
+        self.prizeflower_counter: int = 0
 
     """ GardenStats nested class used as a helper, to display infos"""
     class GardenStats:
-        def print_all_owner(gardens: dict[str, list[Plant]]):
-            for key in gardens:
-                print(f"Garden of {key}")
-            print("\n")
 
-        def get_height_validation(gardens: dict[str, list[Plant]]) ->bool:
-            for key in gardens:
-                for value in gardens[key]:
-                    if GardenManager.is_height_valid(value.height) == False:
-                        return False
-
-        def print_report(owner: str, gardens: dict[str, list[Plant]]) -> None:
+        @staticmethod
+        def print_report(owner: str, gardens: dict) -> None:
             print(f"\n=== {owner}'s Garden Report ===")
             print("Plants in garden:")
             for value in gardens[owner]:
                 value.log()
-        def print_general_report(gardens: dict[str, list[Plant]]) -> None:
+        @staticmethod
+        def get_score(owner: str, gardens: dict) -> int:
+            score: int = 0
+            for value in gardens[owner]:
+                if value.type = "PrizeFlower"
+                    score += value.prize_points
+            return score
+        @staticmethod
+        def print_general_report(gm_instance) -> None:
+            print(f"\nPlants added: {gm_instance.gardens_number}, Total growth: {gm_instance.growth_counter}cm")
+            print(f"Plant types: {gm_instance.regular_counter} regular, {gm_instance.flowering_counter} flowering, {gm_instance.prizeflower_counter} prize flowers\n")
+
+            if gm_instance.get_height_validation(gm_instance.gardens) == True:
+                print("Height validation test: True")
+            else:
+                print("Height validation test: False")
+            print(f"Total garden managed: {gm_instance.gardens_number}")
             return
 
         def print_stats(gardens: dict[str, list[Plant]]):
             return
+
+    def get_height_validation(self, gardens: dict[str, list[Plant]]) ->bool:
+        for key in gardens:
+            for value in gardens[key]:
+                if self.is_height_valid(value.height) == False:
+                    return False
+        return True
 
     """ Function to add a garden, it just creates a empty list in the dict"""
     def add_garden(self, owner: str) -> None:
@@ -83,16 +100,24 @@ class GardenManager:
     def add_plant(self, owner: str, plant: Plant) -> None:
         self.gardens[owner].append(plant)
         print(f"Added {plant.name} to {owner}'s garden")
+        if plant.type == "Plant":
+            self.regular_counter = self.regular_counter + 1
+        elif plant.type == "FloweringPlant":
+            self.flowering_counter = self.flowering_counter + 1
+        elif plant.type == "PrizeFlower":
+            self.prizeflower_counter = self.prizeflower_counter + 1
 
     def make_garden_grow(self, owner:str) -> None:
         print(f"\n{owner} is helping all plants grow ...")
         for value in self.gardens[owner]:
             value.grow()
+            self.growth_counter = self.growth_counter + 1
         return
 
     @classmethod
-    def create_garden_network() -> None:
-        return
+    def create_garden_network(cls):
+        instance = cls()
+        return instance
 
     @staticmethod
     def is_height_valid(height: int) -> bool:
@@ -101,17 +126,16 @@ class GardenManager:
         else:
             return True
 
-
 if __name__ == "__main__":
-    gm: GardenManager = GardenManager()
+    gm: GardenManager = GardenManager.create_garden_network()
     gm.add_garden("Alice")
     gm.add_garden("Mike")
     gm.add_garden("Stalin")
     gm.add_plant("Alice", Plant("Oak Tree", 100, 50))
-    gm.add_plant("Alice", FloweringPlant("Rose", 100, 50, "Red", "Blooming"))
+    gm.add_plant("Alice", FloweringPlant("Rose", 100, 59, "Red", "Blooming"))
     gm.add_plant("Alice", PrizeFlower("Sunflower", 100, 50, "Yellow", "Blooming", 10))
     gm.make_garden_grow("Alice")
     GardenManager.GardenStats.print_report("Alice", gm.gardens)
-    GardenManager.GardenStats.print_general_report(gm.gardens)
+    GardenManager.GardenStats.print_general_report(gm)
 
     # GardenManager.GardenStats.print_all_owner(gm.gardens)
