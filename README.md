@@ -3,7 +3,6 @@
 - flake8
 - docstrings
 - #! (shebang)
-- self keyword
 - classmethod(), staticmethod()
+- self & cls
 ## Info
-- check if i can use constructor before
