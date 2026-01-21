@@ -38,10 +38,10 @@ class PrizeFlower(FloweringPlant):
 
 """ GardenManager class used to manage a gardens duh"""
 class GardenManager:
-
     def __init__(self):
         print("=== Garden Management System Demo ===\n")
         self.gardens: dict[str, list[Plant]] = {} # initialization needed to not get an error
+        self.scores: dict[str, int] = {}
         self.gardens_number: int = 0
         self.growth_counter: int = 0
         self.regular_counter: int = 0
@@ -50,7 +50,7 @@ class GardenManager:
 
     """ GardenStats nested class used as a helper, to display infos"""
     class GardenStats:
-
+       
         @staticmethod
         def print_report(owner: str, gardens: dict) -> None:
             print(f"\n=== {owner}'s Garden Report ===")
@@ -61,7 +61,7 @@ class GardenManager:
         def get_score(owner: str, gardens: dict) -> int:
             score: int = 0
             for value in gardens[owner]:
-                if value.type = "PrizeFlower"
+                if value.type == "PrizeFlower":
                     score += value.prize_points
             return score
         @staticmethod
@@ -73,12 +73,16 @@ class GardenManager:
                 print("Height validation test: True")
             else:
                 print("Height validation test: False")
-            print(f"Total garden managed: {gm_instance.gardens_number}")
+            gm_instance.fill_scores()
+            print(f"Garden scores -", end = ' ')
+            for k in gm_instance.scores:
+                print(f"{k}: {gm_instance.scores[k]}  ", end = ' ')
+            # print("\n")
+            print(f"\nTotal garden managed: {gm_instance.gardens_number}")
             return
 
         def print_stats(gardens: dict[str, list[Plant]]):
             return
-
     def get_height_validation(self, gardens: dict[str, list[Plant]]) ->bool:
         for key in gardens:
             for value in gardens[key]:
@@ -94,6 +98,12 @@ class GardenManager:
                 return
         self.gardens[owner] = []
         self.gardens_number = self.gardens_number + 1
+    def fill_scores(self) -> None:
+        for k in self.gardens:
+            self.scores[k] = 0 
+            for v in self.gardens[k]:
+                if v.type == "PrizeFlower":
+                    self.scores[k] += v.prize_points
 
     """ Function to add a plant to a garden """
     """ Im not checking on the validation of the input  """
@@ -137,5 +147,4 @@ if __name__ == "__main__":
     gm.make_garden_grow("Alice")
     GardenManager.GardenStats.print_report("Alice", gm.gardens)
     GardenManager.GardenStats.print_general_report(gm)
-
     # GardenManager.GardenStats.print_all_owner(gm.gardens)
