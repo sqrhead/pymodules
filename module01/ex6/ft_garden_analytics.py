@@ -81,8 +81,6 @@ class GardenManager:
             print(f"\nTotal garden managed: {gm_instance.gardens_number}")
             return
 
-        def print_stats(gardens: dict[str, list[Plant]]):
-            return
     def get_height_validation(self, gardens: dict[str, list[Plant]]) ->bool:
         for key in gardens:
             for value in gardens[key]:
