@@ -50,7 +50,7 @@ class GardenManager:
 
     """ GardenStats nested class used as a helper, to display infos"""
     class GardenStats:
-       
+
         @staticmethod
         def print_report(owner: str, gardens: dict) -> None:
             print(f"\n=== {owner}'s Garden Report ===")
@@ -79,6 +79,8 @@ class GardenManager:
                 print(f"{k}: {gm_instance.scores[k]}  ", end = ' ')
             # print("\n")
             print(f"\nTotal garden managed: {gm_instance.gardens_number}")
+
+            print(f"Total garden managed: {gm_instance.gardens_number}")
             return
 
     def get_height_validation(self, gardens: dict[str, list[Plant]]) ->bool:
@@ -98,7 +100,7 @@ class GardenManager:
         self.gardens_number = self.gardens_number + 1
     def fill_scores(self) -> None:
         for k in self.gardens:
-            self.scores[k] = 0 
+            self.scores[k] = 0
             for v in self.gardens[k]:
                 if v.type == "PrizeFlower":
                     self.scores[k] += v.prize_points
