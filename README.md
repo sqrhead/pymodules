@@ -6,3 +6,4 @@
 - classmethod(), staticmethod()
 - self & cls
 ## Info
+- main in module02 ? nay or yay

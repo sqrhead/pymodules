@@ -1,5 +1,5 @@
 def check_temperature(temp_str: str) -> int:
-    try: 
+    try:
         result: int = int(temp_str)
         if result < 0 :
             print(f"Error: {result}°C is too cold for plants (min 0°C)")
@@ -10,7 +10,7 @@ def check_temperature(temp_str: str) -> int:
         print(f"Temperature {result}°C is perfect for plants")
         return result
     except ValueError:
-        print(f"Error: '{temp_str}' is not a valid number")    
+        print(f"Error: '{temp_str}' is not a valid number")
         return -1
 
 def test_temperature_input() -> None:
@@ -24,7 +24,6 @@ def test_temperature_input() -> None:
     check_temperature("50")
 
     print("All tests completed - program didn't crash!")
-
 
 if __name__ == "__main__":
     test_temperature_input()
