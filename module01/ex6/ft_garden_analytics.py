@@ -124,7 +124,6 @@ class GardenManager:
     @classmethod
     def create_garden_network(cls):
         instance = cls()
-        instance.add_garden("Lenin")
         return instance
 
     @staticmethod

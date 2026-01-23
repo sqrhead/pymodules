@@ -1,17 +1,18 @@
+""" Plant Class """
 class Plant:
-    name: str
-    height: float
-    start_age: int
+    """ Constructor """
     def __init__(self, name:str, height:float, age:int):
         self.name = name
-        self.height = height
+        self.start_height = height
         self.start_age = age
-        print(f"Created: {self.name} ({self.height}cm, {self.start_age} days)")
+        print(f"Created: {self.name} ({self.start_height}cm, {self.start_age} days)")
 
 if __name__ == "__main__":
     print("=== Plant Factory Output ===")
-    plant1: Plant = Plant("Rose", 25, 10)
-    plant2: Plant = Plant("Sunflower", 2000, 1)
-    plant3: Plant = Plant("Cactus", 120, 50)
-    print("Total plant created: 3")
+    plant1: Plant = Plant("Rose", 25, 30)
+    plant2: Plant = Plant("Oak", 200, 365)
+    plant3: Plant = Plant("Cactus", 5, 90)
+    plant4: Plant = Plant("Sunflower", 80, 45)
+    plant5: Plant = Plant("Fern", 15, 120)
+    print("\nTotal plant created: 5")
 
