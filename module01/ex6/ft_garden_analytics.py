@@ -103,16 +103,17 @@ class GardenManager:
                     self.scores[k] += v.prize_points
 
     """ Function to add a plant to a garden """
-    """ Im not checking on the validation of the input  """
     def add_plant(self, owner: str, plant: Plant) -> None:
-        self.gardens[owner].append(plant)
-        print(f"Added {plant.name} to {owner}'s garden")
-        if plant.type == "Plant":
-            self.regular_counter = self.regular_counter + 1
-        elif plant.type == "FloweringPlant":
-            self.flowering_counter = self.flowering_counter + 1
-        elif plant.type == "PrizeFlower":
-            self.prizeflower_counter = self.prizeflower_counter + 1
+        for k in self.gardens:
+            if k == owner:
+                self.gardens[owner].append(plant)
+                print(f"Added {plant.name} to {owner}'s garden")
+                if plant.type == "Plant":
+                    self.regular_counter = self.regular_counter + 1
+                elif plant.type == "FloweringPlant":
+                    self.flowering_counter = self.flowering_counter + 1
+                elif plant.type == "PrizeFlower":
+                    self.prizeflower_counter = self.prizeflower_counter + 1
 
     def make_garden_grow(self, owner:str) -> None:
         print(f"\n{owner} is helping all plants grow ...")
@@ -141,6 +142,7 @@ if __name__ == "__main__":
     gm.add_plant("Alice", Plant("Oak Tree", 100, 50))
     gm.add_plant("Alice", FloweringPlant("Rose", 100, 59, "Red", "Blooming"))
     gm.add_plant("Alice", PrizeFlower("Sunflower", 100, 50, "Yellow", "Blooming", 10))
+    gm.add_plant("Hitler", Plant("Oak Tree", 500, 80))
     gm.make_garden_grow("Alice")
     GardenManager.GardenStats.print_report("Alice", gm.gardens)
     GardenManager.GardenStats.print_general_report(gm)
