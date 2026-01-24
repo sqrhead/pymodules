@@ -1,5 +1,6 @@
 """ Basic Plant class"""
 class Plant:
+    """ Constructor """
     def __init__(self, name, age, height):
         self.name = name
         self.age = age
@@ -9,35 +10,36 @@ class Plant:
     def grow(self) -> None:
         self.height = self.height + 1
         print(f"{self.name} grew 1cm")
-
+    """ Function to log required for the final format """
     def log(self) -> None:
         print(f"- {self.name}: {self.height}cm")
 
 """ FloweringPlant class  """
 class FloweringPlant(Plant):
-    color: str
-    staus: str
+    """ Constructor """
     def __init__(self, name, age, height, color, status):
         super().__init__(name, age, height)
         self.color = color
         self.status = status
         self.type: str = "FloweringPlant"
+    """ Function to log required for the final format """
     def log(self) -> None:
         print(f"- {self.name}: {self.height}cm, {self.color} flowers ({self.status})")
 
 """ PrizeFlower class  """
 class PrizeFlower(FloweringPlant):
-    prize_points: int
+    """ Constructor """
     def __init__(self, name, age, height, color, status, prize_points):
         super().__init__(name, age, height, color, status)
         self.prize_points: int = prize_points
         self.type: str = "PrizeFlower"
-
+    """ Function to log required for the final format """
     def log(self) -> None:
         print(f"- {self.name}: {self.height}cm, {self.color} flowers ({self.status}), Prize points: {self.prize_points}")
 
 """ GardenManager class used to manage a gardens duh"""
 class GardenManager:
+    """ Constructor """
     def __init__(self):
         print("=== Garden Management System Demo ===\n")
         self.gardens: dict[str, list[Plant]] = {} # initialization needed to not get an error
@@ -50,13 +52,14 @@ class GardenManager:
 
     """ GardenStats nested class used as a helper, to display infos"""
     class GardenStats:
-
+        """ Function to print single report  """
         @staticmethod
         def print_report(owner: str, gardens: dict) -> None:
             print(f"\n=== {owner}'s Garden Report ===")
             print("Plants in garden:")
             for value in gardens[owner]:
                 value.log()
+        """ Function to get the scores"""
         @staticmethod
         def get_score(owner: str, gardens: dict) -> int:
             score: int = 0
@@ -64,6 +67,7 @@ class GardenManager:
                 if value.type == "PrizeFlower":
                     score += value.prize_points
             return score
+        """ Function to print the rest of the format """
         @staticmethod
         def print_general_report(gm_instance) -> None:
             print(f"\nPlants added: {gm_instance.gardens_number}, Total growth: {gm_instance.growth_counter}cm")
@@ -80,6 +84,7 @@ class GardenManager:
             # print("\n")
             print(f"\nTotal garden managed: {gm_instance.gardens_number}")
 
+    """ Function to check all the height of the plants"""
     def get_height_validation(self, gardens: dict[str, list[Plant]]) ->bool:
         for key in gardens:
             for value in gardens[key]:
@@ -95,6 +100,7 @@ class GardenManager:
                 return
         self.gardens[owner] = []
         self.gardens_number = self.gardens_number + 1
+    """ Function to get the scores of all the garden owners"""
     def fill_scores(self) -> None:
         for k in self.gardens:
             self.scores[k] = 0
@@ -114,19 +120,19 @@ class GardenManager:
                     self.flowering_counter = self.flowering_counter + 1
                 elif plant.type == "PrizeFlower":
                     self.prizeflower_counter = self.prizeflower_counter + 1
-
+    """ Function to count total gardens"""
     def make_garden_grow(self, owner:str) -> None:
         print(f"\n{owner} is helping all plants grow ...")
         for value in self.gardens[owner]:
             value.grow()
             self.growth_counter = self.growth_counter + 1
         return
-
+    """ @classmethod Function required by the subject """
     @classmethod
     def create_garden_network(cls):
         instance = cls()
         return instance
-
+    """ Function to check for height in the final format"""
     @staticmethod
     def is_height_valid(height: int) -> bool:
         if height < 0:
