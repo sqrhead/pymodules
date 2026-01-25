@@ -16,6 +16,7 @@ def garden_operations() -> None:
         file = open("missing.txt")
         file.close()
     except FileNotFoundError as fnfe:
+        # file.close()
         print(f"Caught FileNotFoundError: {fnfe}\n")
     print("Testing KeyError...")
     try:

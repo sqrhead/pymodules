@@ -1,19 +1,26 @@
-""" Plant Class """
+
+
 class Plant:
-    """ Constructor """
-    def __init__(self, name:str, height:float, age:int):
+    """ Plant Class """
+
+    def __init__(self, name: str, height: int, age: int):
+        """ Initializer """
         self.name = name
         self.height = height
         self.plant_age = age
-    """ Utility to log info """
+
     def get_info(self) -> None:
+        """ Utility to log info """
         print(f"{self.name}: {self.height}cm, {self.plant_age} days old")
-    """ Requested function for growth """
+
     def grow(self) -> None:
+        """ Requested function for growth """
         self.height = self.height + 1
-    """ Requested function for age """
+
     def age(self) -> None:
+        """ Requested function for age """
         self.plant_age = self.plant_age + 1
+
 
 if __name__ == "__main__":
     plant: Plant = Plant("Rose", 25, 30)

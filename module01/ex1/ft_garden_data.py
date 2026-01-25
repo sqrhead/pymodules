@@ -1,13 +1,18 @@
-""" Plant Class  """
+
+
 class Plant:
-    """ Constructor """
-    def __init__(self, name:str, height:float, age:int):
+    """ Plant Class  """
+
+    def __init__(self, name: str, height: int, age: int):
+        """ Initializer """
         self.name: str = name
-        self.height: float = height
+        self.height: int = height
         self.age: int = age
-    """ Utility to log infos """
+
     def get_info(self) -> None:
+        """ Utility to log infos """
         print(f"{self.name}: {self.height}cm, {self.age} days old")
+
 
 if __name__ == "__main__":
     print("=== Garden Plant Registry ===")

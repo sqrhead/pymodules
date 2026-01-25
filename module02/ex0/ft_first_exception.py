@@ -25,5 +25,6 @@ def test_temperature_input() -> None:
 
     print("All tests completed - program didn't crash!")
 
+# Damn dawg, i dont know if is ok to keep this shit here
 if __name__ == "__main__":
     test_temperature_input()
