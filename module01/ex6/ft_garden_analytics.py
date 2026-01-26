@@ -144,7 +144,7 @@ class GardenManager:
         """ Function to add a plant to a garden """
         for k in self.gardens:
             if k == owner:
-                self.gardens[owner].append(plant)
+                self.gardens[owner] = self.gardens[owner] + [plant]
                 print(f"Added {plant.name} to {owner}'s garden")
                 if plant.type == "Plant":
                     self.regular_counter = self.regular_counter + 1
