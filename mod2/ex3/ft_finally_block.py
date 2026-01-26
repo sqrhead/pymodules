@@ -11,9 +11,10 @@ def water_plants(plant_list) -> None:
     finally:
         print("Closing watering system (cleanup)")
 
+
 def test_watering_system() -> None:
-    plants: str = ["tomato", "lettuce", "carrots"]
-    plants_err: str = ["tomato", "None"]
+    plants: list[str] = ["tomato", "lettuce", "carrots"]
+    plants_err: list[str] = ["tomato", "None"]
     print("=== Garden Watering System ===\n")
     print("Testing normal watering . . .")
     water_plants(plants)
