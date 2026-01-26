@@ -1,30 +1,30 @@
 class GardenError(Exception):
     # useless since everything here is already done by Exception
     # i put it here just to remember
-    def __init__(self, message):
+    def __init__(self, message) -> None:
         super().__init__(message)
         self.message = message
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.message}"
 
 class PlantError(GardenError):
 
-    def __init__(self, message):
+    def __init__(self, message) -> None:
         super().__init__(message)
         self.message = message
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.message}"
 
 
 class WaterError(GardenError):
 
-    def __init__(self, message):
+    def __init__(self, message) -> None:
         super().__init__(message)
         self.message = message
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.message}"
 
 
