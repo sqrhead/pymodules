@@ -11,7 +11,7 @@ class GardenError(Exception):
     pass
 
 
-class WateringError(GardenError):
+class WaterError(GardenError):
     pass
 
 
@@ -45,13 +45,13 @@ class GardenManager:
                 self.garden[k].water = self.garden[k].water + 1
                 self.water_tank = self.water_tank - 1
                 if self.water_tank < 0:
-                    raise WateringError(
+                    raise WaterError(
                         "Error watering plants: " +
                         "Water Tank empty!"
                     )
                 print(f"Watering {self.garden[k].name} - success")
 
-        except WateringError as we:
+        except WaterError as we:
             print(f"{we}")
         finally:
             print("Closing watering system (cleanup)")
@@ -83,7 +83,7 @@ class GardenManager:
                 f"(water: {water},"
                 f"sun: {sun})"
             )
-
+    
     def check_garden_health(self) -> None:
         for k in self.garden:
             plant: Plant = self.garden[k]

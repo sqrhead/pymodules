@@ -2,7 +2,6 @@
 
 class Plant:
     """ Basic Plant class"""
-
     def __init__(self, name, age, height):
         """ Initializer """
         self.name = name

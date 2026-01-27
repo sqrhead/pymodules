@@ -1,5 +1,4 @@
 
-
 class SecurePlant:
     """ SecurePlant class """
     def __init__(self, name: str, age: int, height: float):
@@ -49,7 +48,6 @@ if __name__ == "__main__":
     plant.set_height(25)
     plant.set_age(30)
     plant.set_height(-5)
-
     print(
         f"\nCurrent plant: {plant.get_name()}"
         f"({plant.get_height()}cm, {plant.get_age()} days)"
