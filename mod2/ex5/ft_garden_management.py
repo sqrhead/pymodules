@@ -83,7 +83,7 @@ class GardenManager:
                 f"(water: {water},"
                 f"sun: {sun})"
             )
-    
+
     def check_garden_health(self) -> None:
         for k in self.garden:
             plant: Plant = self.garden[k]
