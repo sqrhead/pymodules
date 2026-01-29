@@ -21,12 +21,12 @@ class PlantError(GardenError):
 
 class WaterError(GardenError):
 
-    def __init__(self, message) -> None:
-        super().__init__(message)
-        self.message = message
+        def __init__(self, message) -> None:
+            super().__init__(message)
+            self.message = message
 
-    def __str__(self) -> str:
-        return f"{self.message}"
+        def __str__(self) -> str:
+            return f"{self.message}"
 
 
 def raise_custom_errors() -> None:

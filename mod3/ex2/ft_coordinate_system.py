@@ -25,31 +25,64 @@ if __name__ == "__main__":
     print(f"Distance between {deftpl} and {tpl}:", end=" ")
     print("%.2f" % get_distance(deftpl, tpl))
 
-    print('\nParsing coordinates: "3,4,0"')
-    coords: str = "3,4,0"
-    splitted: list = coords.split(sep=",")
-    tpl_parse: tuple
-    try:
-        tpl_parse = create_3d_coords(splitted)
-    except ValueError as ve:
-        print(f"{ve}")
-    print(f"Parsed position: {tpl_parse}")
-    print(f"Distance between {deftpl} and {tpl_parse}:", end=" ")
-    print("%.1f" % get_distance(deftpl, tpl_parse))
+    if len(sys.argv) < 2:
+        print('\nParsing coordinates: "3,4,0"')
+        coords: str = "3,4,0"
+        splitted: list = coords.split(sep=",")
+        tpl_parse: tuple
+        try:
+            tpl_parse = create_3d_coords(splitted)
+        except ValueError as ve:
+            print(f"{ve}")
+        print(f"Parsed position: {tpl_parse}")
+        print(f"Distance between {deftpl} and {tpl_parse}:", end=" ")
+        print("%.1f" % get_distance(deftpl, tpl_parse))
 
-    print('\nParsing invalid coordinates: "abc,def,ghi"')
-    inv_coords: str = "abc,def,ghi"
-    splitted: list = inv_coords.split(sep=",")
-    tpl_parse: tuple
-    try:
-        tpl_parse = create_3d_coords(splitted)
-    except ValueError as ve:
-        print(f"Error parsing coordinate: {ve}")
-        print(f'Error details - Type: ValueError, Args: ({ve})')
+        print('\nParsing invalid coordinates: "abc,def,ghi"')
+        inv_coords: str = "abc,def,ghi"
+        splitted: list = inv_coords.split(sep=",")
+        tpl_parse: tuple
+        try:
+            tpl_parse = create_3d_coords(splitted)
+        except ValueError as ve:
+            print(f"Error parsing coordinate: {ve}")
+            print(f'Error details - Type: ValueError, Args: ({ve})')
 
-    print("\nUnpacking demonstration:")
-    pack_tpl: tuple = (3, 4, 0)
-    (x, y, z) = pack_tpl
-    print(f"Player at x={pack_tpl[0]}, y={pack_tpl[1]}, z={pack_tpl[2]}")
-    print(f"Coordinates: X={x}, Y={y}, Z={z}")
+        print("\nUnpacking demonstration:")
+        pack_tpl: tuple = (3, 4, 0)
+        (x, y, z) = pack_tpl
+        print(f"Player at x={pack_tpl[0]}, y={pack_tpl[1]}, z={pack_tpl[2]}")
+        print(f"Coordinates: X={x}, Y={y}, Z={z}")
+    elif len (sys.argv) == 2:
+        print(f'\nParsing coordinates: "{sys.argv[1]}"')
+        coords: str = sys.argv[1]
+        splitted: list = coords.split(sep=",")
+        if len(splitted)  != 3:
+            print("Error: wrong number of elements")
+            raise SystemExit
+        tpl_parse: tuple
+        try:
+            tpl_parse = create_3d_coords(splitted)
+        except ValueError as ve:
+            print(f"{ve}")
+        print(f"Parsed position: {tpl_parse}")
+        print(f"Distance between {deftpl} and {tpl_parse}:", end=" ")
+        print("%.1f" % get_distance(deftpl, tpl_parse))
 
+        print('\nParsing invalid coordinates: "abc,def,ghi"')
+        inv_coords: str = "abc,def,ghi"
+        splitted: list = inv_coords.split(sep=",")
+        tpl_parse: tuple
+        try:
+            tpl_parse = create_3d_coords(splitted)
+        except ValueError as ve:
+            print(f"Error parsing coordinate: {ve}")
+            print(f'Error details - Type: ValueError, Args: ({ve})')
+
+        # print("\nUnpacking demonstration:")
+        # pack_tpl: tuple = (3, 4, 0)
+        # (x, y, z) = pack_tpl
+        # print(f"Player at x={pack_tpl[0]}, y={pack_tpl[1]}, z={pack_tpl[2]}")
+        # print(f"Coordinates: X={x}, Y={y}, Z={z}")
+    else:
+        print("Error: wrong input")

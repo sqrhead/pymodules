@@ -94,7 +94,7 @@ class GardenManager:
 
     def check_garden_tank(self) -> None:
         try:
-            if self.water_tank < 0:
+            if self.water_tank <= 0:
                 raise GardenError(
                     "Caught GardenError: Not enough water in tank"
                 )
