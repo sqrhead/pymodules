@@ -1,11 +1,21 @@
 
-#Authorized: set(), len(), print(), union(), intersection(), difference()
 
 if __name__ == "__main__":
     print("=== Achievement Tracker System ===\n")
-    alice_ach: set = {'first_kill', 'level_10', 'treasure_hunter', 'speed_demon'}
-    bob_ach: set =  {'first_kill', 'level_10', 'boss_slayer', 'collector'}
-    charlie_ach: set = {'level_10', 'treasure_hunter', 'boss_slayer', 'speed_demon', 'perfectionist'}
+    alice_ach: set = {
+        'first_kill',
+        'level_10',
+        'treasure_hunter',
+        'speed_demon'
+    }
+    bob_ach: set = {'first_kill', 'level_10', 'boss_slayer', 'collector'}
+    charlie_ach: set = {
+        'level_10',
+        'treasure_hunter',
+        'boss_slayer',
+        'speed_demon',
+        'perfectionist'
+    }
 
     print(f"Player alice achievements: {alice_ach}")
     print(f"Player bob achievements: {bob_ach}")

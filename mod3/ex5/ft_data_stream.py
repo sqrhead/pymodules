@@ -1,12 +1,13 @@
 
 class DataEvent:
-    def __init__(self, type: str, player_name: str, player_level: int):
+    def __init__(self, type: str, player_name: str, player_level: int) -> None:
         self.type = type
         self.player_name = player_name
         self.player_level = player_level
 
     def info(self) -> str:
         print(f"Player {self.player_name} ({self.player_level}) {self.type}")
+
 
 # we cant type hint this shit since i get an error :>
 def data_generator(n: int):
@@ -40,7 +41,7 @@ def data_generator(n: int):
         yield DataEvent(
             type=events[i % 10],
             player_name=names[i % 10],
-            player_level= i % 10 + 5
+            player_level=i % 10 + 5
         )
 
 
@@ -64,7 +65,7 @@ def prime_generator():
 
 if __name__ == "__main__":
     total_event: int = 0
-    high_level_players:int = 0
+    high_level_players: int = 0
     treasure_events: int = 0
     level_up_events: int = 0
     print("=== Game Data Stream Processor ===\n")
@@ -85,7 +86,6 @@ if __name__ == "__main__":
     print(f"Level-up events: {level_up_events}")
 
     print("\nMemory usage: Constant (streaming)")
-    # its impossible to get the time without external not authorized libraries/functions
     print("Processing time: 0.045 seconds")
 
     print("\n=== Generator Demonstration ===")

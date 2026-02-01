@@ -6,32 +6,45 @@ if __name__ == "__main__":
 
     users = [
         {
-            "name":"alice",
-            "score":2300,
-            "active":True,
-            "achievements": ["first kill", "MVP", "treasure hunter", "level_10", "level_20"],
-            "region":"central"
+            "name": "alice",
+            "score": 2300,
+            "active": True,
+            "achievements": [
+                "first kill",
+                "MVP",
+                "treasure hunter",
+                "level_10",
+                "level_20"
+                ],
+            "region": "central"
         },
         {
-            "name":"charlie",
-            "score":1800,
-            "active":True,
-            "achievements": ["treasure hunter", "quitter", "chest opener", "level_10", "level_20","monster_hunter", "first death"],
-            "region":"north"
+            "name": "charlie",
+            "score": 1800,
+            "active": True,
+            "achievements": [
+                "treasure hunter",
+                "quitter",
+                "chest opener",
+                "level_10",
+                "level_20",
+                "monster_hunter",
+                "first death"],
+            "region": "north"
         },
         {
-            "name":"diana",
-            "score":2150,
-            "active":False,
+            "name": "diana",
+            "score": 2150,
+            "active": False,
             "achievements": [],
-            "region":"north"
+            "region": "north"
         },
         {
-            "name":"bob",
-            "score":2050,
-            "active":True,
+            "name": "bob",
+            "score": 2050,
+            "active": True,
             "achievements": ["level_10", "MVP", "monster_hunter"],
-            "region":"east"
+            "region": "east"
         },
     ]
     high_score = [x["name"] for x in users if x["score"] > 2000]
@@ -43,13 +56,18 @@ if __name__ == "__main__":
     print(f"Active players: {active_players}\n")
 
     print("=== Dict Comprehension Examples ===")
-    scores_dict: dict = {user["name"]: user["score"] for user in users if user["active"]}
+    scores_dict: dict = {
+        user["name"]: user["score"] for user in users if user["active"]
+    }
     sec_dict: dict = {
         "high": len([user for user in users if user["score"] > 2100]),
         "medium": len([user for user in users if user["score"] > 2000]),
         "low": len([user for user in users if user["score"] < 200])
     }
-    ach_counter: dict = {user["name"]: len(user["achievements"]) for user in users if user["active"]}
+    ach_counter: dict = {
+        user["name"]: len(user["achievements"])
+        for user in users if user["active"]
+    }
     print("Player scores: ", scores_dict)
     print("Score categories: ", sec_dict)
     print("Achievements counts: ", ach_counter)
@@ -68,8 +86,6 @@ if __name__ == "__main__":
     print("Unique players: ", unq_players)
     print("Unique achievements: ", unq_ach)
     print("Active regions", regions)
-
-
     print("\n=== Combined Analysis ===")
     print(f"Total players: {len(unq_players)}")
     print(f"Total unique achievements: {len(unq_ach)}")
@@ -79,11 +95,12 @@ if __name__ == "__main__":
         average += j
     average /= len(unq_players)
     print(f"Average score: {average}")
-    pl_di: dict = {user["name"]:user["score"] for user in users}
+    pl_di: dict = {user["name"]: user["score"] for user in users}
     high_player: str = ""
     high_score: int = 0
     for x in pl_di:
         if pl_di[x] > high_score:
             high_score = pl_di[x]
             high_player = x
-    print(f"Top performer: {high_player} ({high_score} points, {ach_counter[high_player]} achivements)")
+    print(f"Top performer: {high_player} ({high_score} points,"
+          f"{ach_counter[high_player]} achivements)")

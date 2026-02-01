@@ -1,20 +1,19 @@
 import sys
-# dict(), len(), print(), keys(), values(), items(), get(),update(), sys, sys.argv
-# missing int()?
+
 
 # WTF
 def ret_int(number: str) -> int:
     num_str: dict[str, int] = {
-        "0":0,
-        "1":1,
-        "2":2,
-        "3":3,
-        "4":4,
-        "5":5,
-        "6":6,
-        "7":7,
-        "8":8,
-        "9":9,
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6,
+        "7": 7,
+        "8": 8,
+        "9": 9,
     }
 
     result: int = 0
@@ -23,13 +22,13 @@ def ret_int(number: str) -> int:
             result = (result * 10) + num_str[i]
         except KeyError:
             print("DAWG WRONG NUMBER INPUT")
+            print("INPUT EXAMPLE: <item_name>:<quantity>")
             raise SystemExit
     return result
 
 
 # WTF 2 - THE RETURN
 def convert_input_element(string: str) -> dict:
-    slot: dict = {}
     str_result: str = ""
     int_result: str = ""
     trigger: bool = False
@@ -40,7 +39,11 @@ def convert_input_element(string: str) -> dict:
             str_result = str_result + i
         elif i != ":" and trigger is True:
             int_result = int_result + i
-    return {str_result : ret_int(int_result)}
+    if trigger is False:
+        print("DAMN DAWG WRONG INPUT")
+        print("INPUT EXAMPLE: <item_name>:<quantity>")
+        raise SystemExit
+    return {str_result: ret_int(int_result)}
 
 
 def get_most_abudant(inventory: dict) -> list:
@@ -70,14 +73,17 @@ def get_lest_abudant(inventory: dict) -> list:
 if __name__ == "__main__":
     inventory: dict[str, int] = {}
     quantities: dict[str, dict] = {
-        "Abudant":{},
-        "Moderate":{},
-        "Scarce":{}
+        "Abudant": {},
+        "Moderate": {},
+        "Scarce": {}
     }
-    restock:list = []
+    restock: list = []
     argv_len: int = len(sys.argv)
     index: int = 1
-
+    if argv_len < 2:
+        print("[ERROR]: No input given")
+        print("[INFO] : Input Example -> <item_name>:<quantity>")
+        raise SystemExit
     # create inventory
     while index < argv_len:
         inventory.update(convert_input_element(sys.argv[index]))
@@ -94,9 +100,10 @@ if __name__ == "__main__":
     print("Unique item types: ", unique_item)
 
     print("\n=== Current Inventory ===")
+    # try:
     for k in inventory:
         print(f"{k}: {inventory.get(k)}", end=" ")
-        print("(%.1f)" %(inventory.get(k) / total_item * 100))
+        print("(%.1f)" % (inventory.get(k) / total_item * 100))
 
     print("\n=== Inventory Statistics ===")
     abundant: list = get_most_abudant(inventory)
@@ -108,7 +115,7 @@ if __name__ == "__main__":
     print("\n=== Item Categories ===")
     for k in inventory:
         if inventory[k] > 9:
-            quantities["Abundant"][k] = inventory[k]
+            quantities["Abudant"][k] = inventory[k]
         elif inventory[k] > 4:
             quantities["Moderate"][k] = inventory[k]
         else:
@@ -133,9 +140,6 @@ if __name__ == "__main__":
     print(f"Dictionary values: {inv_vals}")
     try:
         inventory["sword"]
-        print("Sample lookup - 'sword'in inventory: True")
+        print("Sample lookup - 'sword' in inventory: True")
     except KeyError:
-        print("Sample lookup - 'sword'in inventory: False")
-
-
-
+        print("Sample lookup - 'sword' in inventory: False")

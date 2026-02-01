@@ -1,6 +1,5 @@
 import sys
 
-#sys.argv, len(), sum(), max(), min(), int(), print()
 if __name__ == "__main__":
     print("=== Player Score Analytics ===")
     argv_len: int = len(sys.argv)
@@ -8,7 +7,10 @@ if __name__ == "__main__":
     lst: list[int] = []
 
     if argv_len < 2:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ..")
+        print(
+            "No scores provided. " +
+            "Usage: python3 ft_score_analytics.py <score1> <score2> .."
+        )
     else:
         while index < argv_len:
             try:
@@ -17,7 +19,7 @@ if __name__ == "__main__":
                     raise Exception("Error: Negative number not valid")
             except ValueError:
                 print(f"Error: {sys.argv[index]} is not valid!")
-                raise SystemExit # is valid to use ?
+                raise SystemExit
             except Exception as e:
                 print(f"{e}")
                 raise SystemExit
@@ -29,4 +31,3 @@ if __name__ == "__main__":
         print(f"High score: {max(lst)}")
         print(f"Low score: {min(lst)}")
         print(f"Score range: {max(lst) - min(lst)}")
-

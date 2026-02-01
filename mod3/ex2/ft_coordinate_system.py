@@ -1,7 +1,5 @@
 import sys
 import math
-#sys, sys.argv, math, math.sqrt(), tuple(), int(), float(), split(), print()
-#since sys is imported do i need to use the command line to give inputs?
 
 
 def get_distance(tpl1: tuple, tpl2: tuple) -> float:
@@ -53,12 +51,15 @@ if __name__ == "__main__":
         (x, y, z) = pack_tpl
         print(f"Player at x={pack_tpl[0]}, y={pack_tpl[1]}, z={pack_tpl[2]}")
         print(f"Coordinates: X={x}, Y={y}, Z={z}")
-    elif len (sys.argv) == 2:
+    elif len(sys.argv) == 2:
         # print(f'\nParsing coordinates: "{sys.argv[1]}"')
         coords: str = sys.argv[1]
         splitted: list = coords.split(sep=",")
-        if len(splitted)  != 3:
-            print('Error: DAWG WRONG INPUT, CMON PUT NUMBERS MY DAWG. LIKE THIS "1,2,3"')
+        if len(splitted) != 3:
+            print(
+                'Error: DAWG WRONG INPUT, ' +
+                'CMON PUT NUMBERS MY DAWG. LIKE THIS "1,2,3"'
+            )
             raise SystemExit
         tpl_parse: tuple
         try:
@@ -73,25 +74,13 @@ if __name__ == "__main__":
             print(f"Error parsing coordinate: {ve}")
             print(f'Error details - Type: ValueError, Args: ({ve})')
 
-
-        # print(f"Parsed position: {tpl_parse}")
-        # print(f"Distance between {deftpl} and {tpl_parse}:", end=" ")
-        # print("%.1f" % get_distance(deftpl, tpl_parse))
-
-        # print('\nParsing invalid coordinates: "abc,def,ghi"')
-        # inv_coords: str = "abc,def,ghi"
-        # splitted: list = inv_coords.split(sep=",")
-        # tpl_parse: tuple
-        # try:
-        #     tpl_parse = create_3d_coords(splitted)
-        # except ValueError as ve:
-        #     print(f"Error parsing coordinate: {ve}")
-        #     print(f'Error details - Type: ValueError, Args: ({ve})')
-
         print("\nUnpacking demonstration:")
         pack_tpl: tuple = (3, 4, 0)
         (x, y, z) = pack_tpl
         print(f"Player at x={pack_tpl[0]}, y={pack_tpl[1]}, z={pack_tpl[2]}")
         print(f"Coordinates: X={x}, Y={y}, Z={z}")
     else:
-        print('Error: DAWG WRONG INPUT, CMON PUT NUMBERS MY DAWG. LIKE THIS "1,2,3"')
+        print(
+            'Error: DAWG WRONG INPUT,' +
+            'CMON PUT NUMBERS MY DAWG. LIKE THIS "1,2,3"'
+        )
