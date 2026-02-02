@@ -39,7 +39,7 @@ def convert_input_element(string: str) -> dict:
             str_result = str_result + i
         elif i != ":" and trigger is True:
             int_result = int_result + i
-    if trigger is False:
+    if trigger is False or int_result == "" or int_result == "0":
         print("DAMN DAWG WRONG INPUT")
         print("INPUT EXAMPLE: <item_name>:<quantity>")
         raise SystemExit
