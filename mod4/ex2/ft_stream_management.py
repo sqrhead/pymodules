@@ -7,7 +7,7 @@ import sys
 # TODO: Find way to use sys.stdin and rest
 # DAAAAAAAAAAAAAMN FUCK
 if __name__ == "__main__":
-    print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===\n")
+    print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===")
     try:
         sys.stdout.write("Input Stream active. Enter archivist ID: ")
         sys.stdout.flush()
@@ -16,7 +16,7 @@ if __name__ == "__main__":
         sys.stdout.flush()
         sysre2 = sys.stdin.readline().strip()
         sys.stdout.write(
-            "\n[STANDARD] Archive status " +
+            "[STANDARD] Archive status " +
             f"from {sysre1}: {sysre2}\n"
             )
         sys.stderr.write(
@@ -24,6 +24,8 @@ if __name__ == "__main__":
             )
         sys.stdout.write("[STANDARD] Data transmission complete\n")
 
-        print("\nThree-channel communication test successful.")
-    except Exception:
+        print("Three-channel communication test successful.")
+    except Exception as e:
         print("[ERROR] : DAMN DAWG AN ERROR OCCURED")
+        print(f"[ERROR] : {e}")
+

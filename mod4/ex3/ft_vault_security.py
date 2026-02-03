@@ -1,7 +1,7 @@
 
 # Require: file from the data given
 if __name__ == "__main__":
-    print("=== CYBER ARCHIVES - VAULT SECURITY SYSTEM ===\n")
+    print("=== CYBER ARCHIVES - VAULT SECURITY SYSTEM ===")
     try:
         print("Initiating secure vault access...")
         print("Vault connection established with failsafe protocols\n")
@@ -11,10 +11,10 @@ if __name__ == "__main__":
             print(data)
         with open("preservation_data.txt", "w") as file:
             file.write("[CLASSIFIED] New security protocols archived")
-            print("\nSECURE PRESERVATION:")
+            print("SECURE PRESERVATION:")
             print("[CLASSIFIED] New security protocols archived")
         print("Vault automatically sealed upon completion")
     except Exception:
         print("[ERROR] : DAWG CMON :>")
     finally:
-        print("\nAll vault operations completed with maximum security.")
+        print("All vault operations completed with maximum security.")

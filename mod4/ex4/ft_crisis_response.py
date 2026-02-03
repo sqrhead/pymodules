@@ -2,7 +2,7 @@
 # Require: file from the data given
 if __name__ == "__main__":
 
-    print("=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===\n")
+    print("=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===")
 
     try:
         print("CRISIS ALERT: Attempting access to 'lost_archive.txt'...")
@@ -13,10 +13,12 @@ if __name__ == "__main__":
     finally:
         print("STATUS: Crisis handled, system stable")
 
+    #touch classified_vault.txt
+    #chmod 000 classified_vault.txt
     try:
         print("\nCRISIS ALERT: Attempting access to 'classified_vault.txt'...")
-        with open("/classified_vault.txt", "w") as file:
-            file.write("damn")
+        with open("classified_vault.txt", "r") as file:
+            fdata = file.read()
     except PermissionError:
         print("RESPONSE: Security protocols deny access")
     finally:
@@ -31,9 +33,7 @@ if __name__ == "__main__":
             print(f"SUCCESS: Archive recovered - ''{data}''")
     except Exception as e:
         print(f"[ERROR] : {e}")
-        pass
     finally:
         print("STATUS: Normal operations resumed")
-        pass
 
     print("\nAll crisis scenarios handled successfully. Archives secure.")

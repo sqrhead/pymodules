@@ -10,7 +10,7 @@ class  DataProcessor(ABC):
     def validate(self, data: Any) -> bool:
         pass
     def format_output(self, result: str) -> str:
-        pass
+       return f"Default Output: {result}"
 
 
 class NumericProcessor(DataProcessor):
@@ -54,10 +54,10 @@ class TextProcessor(DataProcessor):
         self.words: int  = 0
 
     def str_len(self, string: str) -> int:
-        len: int = 0
+        size: int = 0
         for i in string:
-            len += 1
-        return len
+            size += 1
+        return size
 
     def counter_words(self, words: str) -> int:
         words_count: int = 0
@@ -87,7 +87,7 @@ class TextProcessor(DataProcessor):
         try:
             data += ""
             return True
-        except Exception : # TypeError probably
+        except Exception : # TypeError
             return False
 
     def format_output(self, result: str) -> str:
@@ -99,8 +99,6 @@ class LogProcessor(DataProcessor):
         print("\nInitializing Log Processor...")
 
     def process(self, data: Any) -> str:
-        output: list = []
-        trigger: bool = False
         print(f'Processing data: {data}')
         if self.validate(data) == True:
             print("Validation: Log entry verified")
@@ -157,11 +155,8 @@ if __name__ == "__main__":
     print(lp.format_output(lp.process("ERROR: Connection timeout")))
 
     print("=== Polymorphic Processing Demo ===")
-    pro: list = [NumericProcessor(), TextProcessor(), LogProcessor()]
-    inp: list = [[1, 2, 3], "Hello", "INFO: [OK]"]
+    pro: List[DataProcessor] = [NumericProcessor(), TextProcessor(), LogProcessor()]
+    inp: List[Any] = [[1, 2, 3], "Hello", "INFO: [OK]"]
     print("Processing multiple data types through same interface...\n")
     for x in [0, 1, 2]:
         print(f"Result {x + 1}: {pro[x].process(inp[x])}\n")
-
-    pass
-

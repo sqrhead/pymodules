@@ -1,6 +1,6 @@
 # Require: file from the data given
 if __name__ == "__main__":
-    print("=== CYBER ARCHIVES - PRESERVATION SYSTEM ===\n")
+    print("=== CYBER ARCHIVES - PRESERVATION SYSTEM ===")
     try:
         print("Initializing new storage unit: new_discovery.txt")
         file = open("new_discovery.txt", "w")
@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
         print("\nData inscription complete. Storage unit sealed.")
         print(
-            "Archive 'new_discovery.txt'"
+            "Archive 'new_discovery.txt' "
             + "ready for long-term preservation."
             )
     except Exception:
