@@ -30,7 +30,6 @@ class SensorStream(DataStream):
 
     def process_batch(self, data_batch: List[Any]) -> str:
         try:
-
             for k in data_batch:
                 self.total_reading += 1
                 self.total_temperature += k["temp"]
@@ -43,8 +42,16 @@ class SensorStream(DataStream):
             f"avg temp: {self.average_temperature}C"
         )
 
+    def get_stats(self) -> Dict[str, Union[str, int, float]]:
+        return {
+            "reading processed":self.total_reading,
+        }
 
-    # def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+        if criteria == None:
+            return data_batch
+        else:
+            return [item[criteria] for item in data_batch if item[criteria] > 100]
 
 
 class TransactionStream(DataStream):
@@ -75,6 +82,25 @@ class TransactionStream(DataStream):
             f"net flow: {self.net_flow} units"
         )
 
+    def get_stats(self) -> Dict[str, Union[str, int, float]]:
+        return {
+            "operations processed":self.total_operations,
+        }
+
+    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+        try:
+            if criteria == None:
+                return data_batch
+            else:
+                if criteria == "sell" or criteria == "buy":
+                    return [item[criteria] for item in data_batch if item[criteria] > 100]
+        except KeyError as ke:
+            print(f"KEY_ERROR: {ke}")
+        except Exception as e:
+            print(f"ERROR: {e}")
+
+
+
 class EventStream(DataStream):
 
     def __init__(self, stream_id: int) -> None:
@@ -103,10 +129,92 @@ class EventStream(DataStream):
             f"Event analysis: {self.total_events} events, {self.total_errors} error detected"
         )
 
-class StreamProcessor:
-    def __init__(self, batch: List[Any]) -> None:
-        pass
+    def get_stats(self) -> Dict[str, Union[str, int, float]]:
+        return {
+            "events processed":self.total_events,
+        }
 
+    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+        if criteria == None:
+            return data_batch
+        else:
+                return [item for item in data_batch if item == criteria]
+
+class StreamProcessor:
+    def __init__(self, streams: List[List[DataStream]]) -> None:
+        print("Processing mixed stream types through unified interface...")
+        self.streams = streams
+        self.ssdata: List[Any] = [
+            {"temp": 22.5, "humidity": 65, "pressure": 1013},
+            {"temp": 120, "humidity": 10000, "pressure": 500},
+            {"temp": 480, "humidity": 400, "pressure": 300},
+        ]
+        self.tsdata: List[Dict] = [
+            {"buy": 100},
+            {"sell": 150},
+            {"buy": 75},
+            {"buy": 20},
+        ]
+        self.esdata: List[str] = [
+            "error","login","logout"
+        ]
+
+    def __len_res(self, stream: List[Any]) -> int:
+        len_stream: int = 0
+        try:
+            for _ in stream:
+                len_stream += 1
+        except Exception as e:
+            print(f"ERROR: {e}")
+        finally:
+            return len_stream
+
+    def process_batch(self) -> None:
+        batch_counter: int = 0
+        try:
+            for l in self.streams:
+                batch_counter += 1
+                print(f"\nBatch {batch_counter} result:")
+                for s in l:
+                    data = s.get_stats()
+                    if isinstance(s, SensorStream) is True:
+                        for k in data:
+                            print(f"- Sensor data: {data[k]} {k}")
+                    elif isinstance(s, EventStream) is True:
+                         for k in data:
+                            print(f"- Event data: {data[k]} {k}")
+                    elif isinstance(s, TransactionStream) is True:
+                        for k in data:
+                            print(f"- Transaction data: {data[k]} {k}")
+                    else:
+                        raise Exception("WRONG STREAM INPUTED")
+        except Exception as e:
+            print(f"ERROR: {e}")
+
+    def filter_batch(self) -> None:
+        sensor_result: List[Any]
+        trans_result: List[Any]
+        event_result: List[Any]
+        try:
+            for list_stream in self.streams:
+                for stream in list_stream:
+                    if isinstance(stream, SensorStream) is True:
+                        sensor_result = stream.filter_data(self.ssdata, "temp")
+                    elif isinstance(stream, TransactionStream) is True:
+                        trans_result = stream.filter_data(self.tsdata, "buy")
+                    elif isinstance(stream, EventStream) is True:
+                        event_result = stream.filter_data(self.esdata, "error")
+                    else:
+                        raise Exception("Wrong stream inputed")
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return
+        print(
+            f"Filtered result: "+
+            f"{self.__len_res(sensor_result)} critical sensor alerts, " +
+            f"{self.__len_res(trans_result)} large transaction" +
+            f"{self.__len_res(event_result)} important events"
+        )
 
 if __name__ == "__main__":
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===")
@@ -119,12 +227,12 @@ if __name__ == "__main__":
     tsdata: List[Dict] = [
         {"buy": 100},
         {"sell": 150},
-        {"buy": 75}
+        {"buy": 75},
+        {"buy": 20},
     ]
     esdata: List[str] = [
         "error","login","logout"
     ]
-    streamprocessor: StreamProcessor = StreamProcessor([])
     ss: SensorStream = SensorStream("SENSOR_001")
     print(ss.process_batch(ssdata))
     ts: TransactionStream = TransactionStream("TRANS_001")
@@ -133,3 +241,6 @@ if __name__ == "__main__":
     print(es.process_batch(esdata))
 
     print("=== Polymorphic Stream Processing ===")
+    streamprocessor: StreamProcessor = StreamProcessor([[ss, ts, es]])
+    streamprocessor.process_batch()
+    streamprocessor.filter_batch()
