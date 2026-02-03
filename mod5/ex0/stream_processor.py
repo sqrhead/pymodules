@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any, List
-# HHAHAHHAHAHAHAHAHHAHAHAHHAHAHAHHAHA
+
 # this module is kind of abstract ah ah ah
 class  DataProcessor(ABC):
     @abstractmethod
@@ -26,7 +26,7 @@ class NumericProcessor(DataProcessor):
         if self.validate(data) is True:
             print("Validation: Numeric data verified")
         else:
-            print("Validation: NUmeric data not verified")
+            print("Validation: Numeric data not verified")
             return f"Processed {self.len} numeric values, sum={self.sum}, avg={self.avg}"
 
         for n in data:
@@ -40,7 +40,7 @@ class NumericProcessor(DataProcessor):
             for x in data:
                 x += 0
                 return True
-        except: # TypeError
+        except Exception: # TypeError
             return False
 
     def format_output(self, result: str) -> str:
@@ -87,7 +87,7 @@ class TextProcessor(DataProcessor):
         try:
             data += ""
             return True
-        except: # TypeError probably
+        except Exception : # TypeError probably
             return False
 
     def format_output(self, result: str) -> str:
@@ -136,7 +136,7 @@ class LogProcessor(DataProcessor):
                 return True
             else:
                 return False
-        except:
+        except Exception:
             return False
 
     def format_output(self, result: str) -> str:
@@ -149,14 +149,16 @@ if __name__ == "__main__":
 
     np: NumericProcessor = NumericProcessor()
     print(np.format_output(np.process([1, 2, 3 ,4 ,5])))
+
     tp: TextProcessor = TextProcessor()
     print(tp.format_output(tp.process("Hello Nexus World")))
+
     lp: LogProcessor = LogProcessor()
     print(lp.format_output(lp.process("ERROR: Connection timeout")))
 
+    print("=== Polymorphic Processing Demo ===")
     pro: list = [NumericProcessor(), TextProcessor(), LogProcessor()]
     inp: list = [[1, 2, 3], "Hello", "INFO: [OK]"]
-    print("=== Polymorphic Processing Demo ===")
     print("Processing multiple data types through same interface...\n")
     for x in [0, 1, 2]:
         print(f"Result {x + 1}: {pro[x].process(inp[x])}\n")

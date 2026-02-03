@@ -15,11 +15,15 @@ if __name__ == "__main__":
         sys.stdout.write("Input Stream active. Enter status report: ")
         sys.stdout.flush()
         sysre2 = sys.stdin.readline().strip()
-
-        sys.stdout.write(f"\n[STANDARD] Archive status from {sysre1}: {sysre2}\n")
-        sys.stderr.write("[ALERT] System diagnostic: Communication channels verified\n")
+        sys.stdout.write(
+            "\n[STANDARD] Archive status " +
+            f"from {sysre1}: {sysre2}\n"
+            )
+        sys.stderr.write(
+            "[ALERT] System diagnostic: Communication channels verified\n"
+            )
         sys.stdout.write("[STANDARD] Data transmission complete\n")
 
         print("\nThree-channel communication test successful.")
-    except:
+    except Exception:
         print("[ERROR] : DAMN DAWG AN ERROR OCCURED")

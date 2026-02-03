@@ -14,7 +14,7 @@ if __name__ == "__main__":
             print("\nSECURE PRESERVATION:")
             print("[CLASSIFIED] New security protocols archived")
         print("Vault automatically sealed upon completion")
-    except:
+    except Exception:
         print("[ERROR] : DAWG CMON :>")
     finally:
         print("\nAll vault operations completed with maximum security.")

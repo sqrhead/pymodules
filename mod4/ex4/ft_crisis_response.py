@@ -6,7 +6,7 @@ if __name__ == "__main__":
 
     try:
         print("CRISIS ALERT: Attempting access to 'lost_archive.txt'...")
-        with open("lost_archive.txt","r") as file:
+        with open("lost_archive.txt", "r") as file:
             data = file.read()
     except FileNotFoundError:
         print("RESPONSE: Archive not found in storage matrix")
@@ -23,7 +23,9 @@ if __name__ == "__main__":
         print("STATUS: Crisis handled, security maintained")
 
     try:
-        print("\nROUTINE ACCESS: Attempting access to 'standard_archive.txt'...")
+        print(
+            "\nROUTINE ACCESS: Attempting access to 'standard_archive.txt'..."
+            )
         with open("standard_archive.txt", "r") as file:
             data = file.read()
             print(f"SUCCESS: Archive recovered - ''{data}''")
@@ -35,5 +37,3 @@ if __name__ == "__main__":
         pass
 
     print("\nAll crisis scenarios handled successfully. Archives secure.")
-
-
