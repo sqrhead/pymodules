@@ -14,19 +14,19 @@ class DataStream(ABC):
             return [item for item in data_batch if criteria == item]
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
-        pass
+        return {}
 
 
 class SensorStream(DataStream):
 
-    def __init__(self, stream_id: int) -> None:
-        self.stream_id = stream_id
+    def __init__(self, stream_id: str) -> None:
+        self.stream_id: str = stream_id
         self.total_reading: int = 0
         self.total_temperature: float = 0.0
         self.average_temperature: float = 0.0
         print("\nInitializing Sensor Stream ...")
         print(f"Stream ID: {stream_id}, Type: Enviromental Data")
-        pass
+
 
     def process_batch(self, data_batch: List[Any]) -> str:
         try:
@@ -48,21 +48,26 @@ class SensorStream(DataStream):
         }
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
-        if criteria == None:
-            return data_batch
-        else:
-            return [item[criteria] for item in data_batch if item[criteria] > 100]
+        try:
+            if criteria == None:
+                return data_batch
+            elif criteria == "temp":
+                return [item for item in data_batch if criteria in item and  item[criteria] > 100]
+            else:
+                raise Exception("WRONG INPUTED CRITERIA")
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return []
 
 
 class TransactionStream(DataStream):
 
-    def __init__(self, stream_id: int) -> None:
-        self.stream_id = stream_id
+    def __init__(self, stream_id: str) -> None:
+        self.stream_id: str = stream_id
         self.net_flow: float = 0
         self.total_operations: int = 0
         print("\nInitializing Transaction Stream...")
         print(f"Stream ID: {stream_id}, Type: Financial Data")
-        pass
 
     def process_batch(self, data_batch: List[Any]) -> str:
         try:
@@ -92,27 +97,27 @@ class TransactionStream(DataStream):
             if criteria == None:
                 return data_batch
             elif criteria == "sell":
-                return [item for item in data_batch if "sell" in item and item[criteria] > 100]
+                return [item for item in data_batch if "sell" in item and item["sell"] > 100]
             elif criteria == "buy":
-                return [item for item in data_batch if "buy" in  item and item[criteria] > 100]
+                return [item for item in data_batch if "buy" in  item and item["buy"] > 100]
             else:
                 raise Exception("Wrong criteria inputed: 'buy' or 'sell' valid")
         except KeyError as ke:
             print(f"KEY_ERROR: {ke}")
+            return []
         except Exception as e:
             print(f"ERROR: {e}")
-
+            return []
 
 
 class EventStream(DataStream):
 
-    def __init__(self, stream_id: int) -> None:
-        self.stream_id = stream_id
+    def __init__(self, stream_id: str) -> None:
+        self.stream_id: str = stream_id
         self.total_events: int = 0
         self.total_errors: int = 0
         print("\nInitializing Event Stream...")
         print(f"Stream ID: {stream_id}, Type: System Events")
-        pass
 
     def process_batch(self, data_batch: List[Any]) -> str:
         try:
@@ -138,10 +143,15 @@ class EventStream(DataStream):
         }
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
-        if criteria == None:
-            return data_batch
-        else:
-                return [item for item in data_batch if item == criteria]
+        try:
+            if criteria == None:
+                return data_batch
+            else:
+                    return [item for item in data_batch if item == criteria]
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return []
+
 
 class StreamProcessor:
     def __init__(self, streams: List[List[DataStream]]) -> None:
