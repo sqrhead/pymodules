@@ -92,8 +92,12 @@ class TransactionStream(DataStream):
             if criteria == None:
                 return data_batch
             else:
-                if criteria == "sell" or criteria == "buy":
+                if criteria == "sell":
                     return [item[criteria] for item in data_batch if item[criteria] > 100]
+                elif criteria == "buy":
+                    return [item[criteria] for item in data_batch if item[criteria] > 100]
+                else:
+                    raise Exception("Wrong criteria inputed: 'buy' or 'sell' valid")
         except KeyError as ke:
             print(f"KEY_ERROR: {ke}")
         except Exception as e:
@@ -219,7 +223,7 @@ class StreamProcessor:
 if __name__ == "__main__":
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===")
 
-    ssdata: List[Any] = [
+    ssdata: List[Dict] = [
         {"temp": 22.5, "humidity": 65, "pressure": 1013},
         {"temp": 120, "humidity": 10000, "pressure": 500},
         {"temp": 480, "humidity": 400, "pressure": 300},
