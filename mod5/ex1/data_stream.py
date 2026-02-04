@@ -8,10 +8,14 @@ class DataStream(ABC):
         pass
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
-        if criteria == None:
-            return data_batch
-        else:
-            return [item for item in data_batch if criteria == item]
+        try:
+            if criteria == None:
+                return data_batch
+            else:
+                return [item for item in data_batch if criteria == item]
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return []
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         return {}
@@ -35,7 +39,11 @@ class SensorStream(DataStream):
                 self.total_temperature += k["temp"]
         except Exception as e:
             return f"Error: {e}"
-        self.average_temperature = self.total_temperature / self.total_reading
+        try:
+            self.average_temperature = self.total_temperature / self.total_reading
+        except Exception as e:
+            f"ERROR: {e}"
+
         return (
             f"Processing sensor batch: {data_batch}\n" +
             f"Sensory analysis batch: {self.total_reading} readings proceeded, "+
@@ -44,7 +52,7 @@ class SensorStream(DataStream):
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         return {
-            "reading processed":self.total_reading,
+            "reading processed": self.total_reading,
         }
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
@@ -147,7 +155,7 @@ class EventStream(DataStream):
             if criteria == None:
                 return data_batch
             else:
-                    return [item for item in data_batch if item == criteria]
+                return [item for item in data_batch if item == criteria]
         except Exception as e:
             print(f"ERROR: {e}")
             return []
