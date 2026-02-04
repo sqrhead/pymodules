@@ -91,13 +91,12 @@ class TransactionStream(DataStream):
         try:
             if criteria == None:
                 return data_batch
+            elif criteria == "sell":
+                return [item for item in data_batch if "sell" in item and item[criteria] > 100]
+            elif criteria == "buy":
+                return [item for item in data_batch if "buy" in  item and item[criteria] > 100]
             else:
-                if criteria == "sell":
-                    return [item[criteria] for item in data_batch if item[criteria] > 100]
-                elif criteria == "buy":
-                    return [item[criteria] for item in data_batch if item[criteria] > 100]
-                else:
-                    raise Exception("Wrong criteria inputed: 'buy' or 'sell' valid")
+                raise Exception("Wrong criteria inputed: 'buy' or 'sell' valid")
         except KeyError as ke:
             print(f"KEY_ERROR: {ke}")
         except Exception as e:
@@ -154,8 +153,8 @@ class StreamProcessor:
             {"temp": 480, "humidity": 400, "pressure": 300},
         ]
         self.tsdata: List[Dict] = [
-            {"buy": 100},
-            {"sell": 150},
+            {"buy": 120},
+            {"sell": 120},
             {"buy": 75},
             {"buy": 20},
         ]
@@ -216,7 +215,7 @@ class StreamProcessor:
         print(
             f"Filtered result: "+
             f"{self.__len_res(sensor_result)} critical sensor alerts, " +
-            f"{self.__len_res(trans_result)} large transaction" +
+            f"{self.__len_res(trans_result)} large transaction, " +
             f"{self.__len_res(event_result)} important events"
         )
 
