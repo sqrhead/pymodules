@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import *
+from typing import Any, List, Optional, Union, Dict
+
 
 class DataStream(ABC):
 
@@ -9,7 +10,7 @@ class DataStream(ABC):
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
         try:
-            if criteria == None:
+            if criteria is None:
                 return data_batch
             else:
                 return [item for item in data_batch if criteria == item]
@@ -31,7 +32,6 @@ class SensorStream(DataStream):
         print("\nInitializing Sensor Stream ...")
         print(f"Stream ID: {stream_id}, Type: Enviromental Data")
 
-
     def process_batch(self, data_batch: List[Any]) -> str:
         try:
             for k in data_batch:
@@ -42,7 +42,7 @@ class SensorStream(DataStream):
         try:
             self.average_temperature = self.total_temperature / self.total_reading
         except Exception as e:
-            f"ERROR: {e}"
+            return f"ERROR: {e}"
 
         return (
             f"Processing sensor batch: {data_batch}\n" +
@@ -55,12 +55,18 @@ class SensorStream(DataStream):
             "reading processed": self.total_reading,
         }
 
+    # Insert print to avoid 'isinstance()' is StreamProcessor
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
         try:
-            if criteria == None:
+            if criteria is None:
                 return data_batch
             elif criteria == "temp":
-                return [item for item in data_batch if criteria in item and  item[criteria] > 100]
+                result = [
+                    item
+                    for item in data_batch
+                    if criteria in item and item[criteria] > 100
+                ]
+                return result
             else:
                 raise Exception("WRONG INPUTED CRITERIA")
         except Exception as e:
@@ -202,7 +208,7 @@ class StreamProcessor:
                         for k in data:
                             print(f"- Sensor data: {data[k]} {k}")
                     elif isinstance(s, EventStream) is True:
-                         for k in data:
+                        for k in data:
                             print(f"- Event data: {data[k]} {k}")
                     elif isinstance(s, TransactionStream) is True:
                         for k in data:
@@ -213,9 +219,9 @@ class StreamProcessor:
             print(f"ERROR: {e}")
 
     def filter_batch(self) -> None:
-        sensor_result: List[Any]
-        trans_result: List[Any]
-        event_result: List[Any]
+        sensor_result: List[Any] = []
+        trans_result: List[Any] = []
+        event_result: List[Any] = []
         try:
             for list_stream in self.streams:
                 for stream in list_stream:
