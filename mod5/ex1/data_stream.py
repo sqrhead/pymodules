@@ -26,37 +26,37 @@ class SensorStream(DataStream):
 
     def __init__(self, stream_id: str) -> None:
         self.stream_id: str = stream_id
-        self.total_reading: int = 0
-        self.total_temperature: float = 0.0
-        self.average_temperature: float = 0.0
+        self.tot_read: int = 0
+        self.tot_temp: float = 0.0
+        self.avg_temp: float = 0.0
         self.type = "Sensor"
         print("\nInitializing Sensor Stream ...")
         print(f"Stream ID: {stream_id}, Type: Enviromental Data")
 
     def process_batch(self, data_batch: List[Any]) -> str:
-        self.total_reading = 0
-        self.total_temperature = 0.0
-        self.average_temperature = 0.0
+        self.tot_read = 0
+        self.tot_temp = 0.0
+        self.avg_temp = 0.0
         try:
             for k in data_batch:
-                self.total_reading += 1
-                self.total_temperature += k["temp"]
+                self.tot_read += 1
+                self.tot_temp += k["temp"]
         except Exception as e:
             return f"Error: {e}"
         try:
-            self.average_temperature = self.total_temperature / self.total_reading
+            self.avg_temp = self.tot_temp / self.tot_read
         except Exception as e:
             return f"ERROR: {e}"
 
         return (
             f"Processing sensor batch: {data_batch}\n" +
-            f"Sensory analysis batch: {self.total_reading} readings proceeded, "+
-            f"avg temp: {self.average_temperature}C"
+            f"Sensory analysis batch: {self.tot_read} readings proceeded, " +
+            f"avg temp: {self.avg_temp}C"
         )
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         return {
-            "reading processed": self.total_reading,
+            "reading processed": self.tot_read,
         }
 
     # Insert print to avoid 'isinstance()' is StreamProcessor
@@ -83,17 +83,17 @@ class TransactionStream(DataStream):
     def __init__(self, stream_id: str) -> None:
         self.stream_id: str = stream_id
         self.net_flow: float = 0
-        self.total_operations: int = 0
+        self.tot_ops: int = 0
         self.type = "Transaction"
         print("\nInitializing Transaction Stream...")
         print(f"Stream ID: {stream_id}, Type: Financial Data")
 
     def process_batch(self, data_batch: List[Any]) -> str:
         self.net_flow = 0
-        self.total_operations = 0
+        self.tot_ops = 0
         try:
             for index in data_batch:
-                self.total_operations += 1
+                self.tot_ops += 1
                 if "sell" in index:
                     self.net_flow -= index["sell"]
                 elif "buy" in index:
@@ -104,13 +104,13 @@ class TransactionStream(DataStream):
             return f"Error: {e}"
         return (
             f"Processing transaction batch: {data_batch}\n" +
-            f"Transaction analysis batch: {self.total_operations} operations, "+
+            f"Transaction analysis batch: {self.tot_ops} operations, " +
             f"net flow: {self.net_flow} units"
         )
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         return {
-            "operations processed":self.total_operations,
+            "operations processed": self.tot_ops,
         }
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
@@ -118,13 +118,23 @@ class TransactionStream(DataStream):
             if criteria is None:
                 return data_batch
             elif criteria == "sell":
-                result = [item for item in data_batch if "sell" in item and item["sell"] > 100]
+                result = [
+                    item
+                    for item in data_batch
+                    if "sell" in item and item["sell"] > 100
+                ]
                 return result
             elif criteria == "buy":
-                result = [item for item in data_batch if "buy" in  item and item["buy"] > 100]
+                result = [
+                    item
+                    for item in data_batch
+                    if "buy" in item and item["buy"] > 100
+                ]
                 return result
             else:
-                raise Exception("Wrong criteria inputed: 'buy' or 'sell' valid")
+                raise Exception(
+                    "Wrong criteria inputed: 'buy' or 'sell' valid"
+                    )
         except KeyError as ke:
             print(f"KEY_ERROR: {ke}")
             return []
@@ -137,20 +147,20 @@ class EventStream(DataStream):
 
     def __init__(self, stream_id: str) -> None:
         self.stream_id: str = stream_id
-        self.total_events: int = 0
-        self.total_errors: int = 0
+        self.tot_evt: int = 0
+        self.tot_err: int = 0
         self.type = "Event"
         print("\nInitializing Event Stream...")
         print(f"Stream ID: {stream_id}, Type: System Events")
 
     def process_batch(self, data_batch: List[Any]) -> str:
-        self.total_errors = 0
-        self.total_events = 0
+        self.tot_err = 0
+        self.tot_evt = 0
         try:
             for k in data_batch:
-                self.total_events += 1
+                self.tot_evt += 1
                 if k == "error":
-                    self.total_errors += 1
+                    self.tot_err += 1
                 elif k == "login" or k == "logout":
                     continue
                 else:
@@ -160,12 +170,13 @@ class EventStream(DataStream):
 
         return (
             f"Processing event batch: {data_batch}\n"
-            f"Event analysis: {self.total_events} events, {self.total_errors} error detected"
+            f"Event analysis: {self.tot_evt} events, "
+            f"{self.tot_err} error detected"
         )
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         return {
-            "events processed":self.total_events,
+            "events processed": self.tot_evt,
         }
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
@@ -197,7 +208,7 @@ class StreamProcessor:
             {"buy": 20},
         ]
         self.esdata: List[str] = [
-            "error","login","logout"
+            "error", "login", "logout"
         ]
 
     def __len_res(self, stream: List[Any]) -> int:
@@ -213,10 +224,10 @@ class StreamProcessor:
     def process_batch(self) -> None:
         batch_counter: int = 0
         try:
-            for l in self.streams:
+            for lst in self.streams:
                 batch_counter += 1
                 print(f"\nBatch {batch_counter} result:")
-                for s in l:
+                for s in lst:
                     data = s.get_stats()
                     for k in data:
                         print(f"- {s.type} data: {data[k]} {k}")
@@ -229,20 +240,20 @@ class StreamProcessor:
         event_result: List[Any] = []
         try:
             for list_stream in self.streams:
-                for stream in list_stream:
-                    if isinstance(stream, SensorStream) is True:
-                        sensor_result += stream.filter_data(self.ssdata, "temp")
-                    elif isinstance(stream, TransactionStream) is True:
-                        trans_result += stream.filter_data(self.tsdata, "buy")
-                    elif isinstance(stream, EventStream) is True:
-                        event_result += stream.filter_data(self.esdata, "error")
+                for st in list_stream:
+                    if isinstance(st, SensorStream) is True:
+                        sensor_result += st.filter_data(self.ssdata, "temp")
+                    elif isinstance(st, TransactionStream) is True:
+                        trans_result += st.filter_data(self.tsdata, "buy")
+                    elif isinstance(st, EventStream) is True:
+                        event_result += st.filter_data(self.esdata, "error")
                     else:
                         raise Exception("Wrong stream inputed")
         except Exception as e:
             print(f"ERROR: {e}")
             return
         print(
-            f"Filtered result: "+
+            "Filtered result: " +
             f"{self.__len_res(sensor_result)} critical sensor alerts, " +
             f"{self.__len_res(trans_result)} large transaction, " +
             f"{self.__len_res(event_result)} important events"
@@ -264,7 +275,7 @@ if __name__ == "__main__":
         {"buy": 20},
     ]
     esdata: List[str] = [
-        "error","login","logout"
+        "error", "login", "logout"
     ]
     ss: SensorStream = SensorStream("SENSOR_001")
     print(ss.process_batch(ssdata))
