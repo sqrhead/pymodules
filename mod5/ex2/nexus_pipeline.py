@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Protocol, List, Dict, Union, Any
 import time
-# import collections
 
-# HAHAHAHAHAHAAHHAAH FUCKING UNREAL
 class ProcessingStage(Protocol):
 
     def process(self, data: Any) -> Any:
@@ -13,35 +11,38 @@ class ProcessingStage(Protocol):
 class InputStage:
 
     def process(self, data: Any) -> Dict:
-        if data == None:
+        if data is None:
             raise Exception("ERROR: InputStage fail!!")
         return {"data" : data, "parsed": True}
 
 
 class TransformStage:
 
-    def process(self, data: Any) -> Any:
-        if data == None:
+    def process(self, data: Any) -> Dict:
+        if data is None:
             raise Exception("ERROR: TransformationStage fail!!")
-        if not isinstance(data, Dict):
+        if not isinstance(data, dict):
             raise Exception("ERROR: TransformationStage data fail!!")
         data["transformed"] = True
         return data
 
+
 class OutputStage:
-    def process(self, data: Any) -> Any:
-        if data == None:
+
+    def process(self, data: Any) -> str:
+        if data is None:
             raise Exception("ERROR: OutputStage fail!!")
-        if not isinstance(data, Dict):
+        if not isinstance(data, dict):
             raise Exception("ERROR: OutputStage data fail!!")
         return f"Output: {data}"
+
 
 class ProcessingPipeline(ABC):
 
     def __init__(self) -> None:
         self.stages: List[ProcessingStage]  = []
 
-    def add_stage(self, stage: ProcessingStage):
+    def add_stage(self, stage: ProcessingStage) -> None:
         self.stages = self.stages + [stage]
 
     @abstractmethod
@@ -50,9 +51,10 @@ class ProcessingPipeline(ABC):
 
 
 class JSONAdapter(ProcessingPipeline):
-    def __init__(self, parameter_id):
+
+    def __init__(self, pipeline_id: str) -> None:
         super().__init__()
-        self.parameter_id = parameter_id
+        self.pipeline_id = pipeline_id
 
     def process(self, data: Any) -> Union[str, Any]:
         result = data
@@ -62,9 +64,11 @@ class JSONAdapter(ProcessingPipeline):
 
 
 class CSVAdapter(ProcessingPipeline):
-    def __init__(self, parameter_id):
+
+    def __init__(self, pipeline_id: str) -> None:
         super().__init__()
-        self.parameter_id = parameter_id
+        self.pipeline_id = pipeline_id
+
 
     def process(self, data: Any) -> Union[str, Any]:
         result = data
@@ -74,9 +78,11 @@ class CSVAdapter(ProcessingPipeline):
 
 
 class StreamAdapter(ProcessingPipeline):
-    def __init__(self, parameter_id):
+
+    def __init__(self, pipeline_id: str) -> None:
         super().__init__()
-        self.parameter_id = parameter_id
+        self.pipeline_id = pipeline_id
+
 
     def process(self, data: Any) -> Union[str, Any]:
         result = data
@@ -106,7 +112,7 @@ class NexusManager:
 
     def process_json(self, data: Any) -> None:
 
-        print(f"Processing {self.json_adapter.parameter_id} data through same pipeline...")
+        print(f"Processing {self.json_adapter.pipeline_id} data through same pipeline...")
         try:
             print(f"Input: {data}")
             result = self.json_adapter.process(data)
@@ -116,7 +122,7 @@ class NexusManager:
             print(f"{e}")
 
     def process_csv(self, data: Any) -> None:
-        print(f"Processing {self.csv_adapter.parameter_id} data through same pipeline...")
+        print(f"Processing {self.csv_adapter.pipeline_id} data through same pipeline...")
         try:
             print(f"Input: {data}")
             result = self.csv_adapter.process(data)
@@ -126,7 +132,7 @@ class NexusManager:
             print(f"{e}")
 
     def process_stream(self, data: Any) -> None:
-        print(f"Processing {self.stream_adapter.parameter_id} data through same pipeline...")
+        print(f"Processing {self.stream_adapter.pipeline_id} data through same pipeline...")
         try:
             print(f"Input: {data}")
             result = self.stream_adapter.process(data)
@@ -137,12 +143,12 @@ class NexusManager:
 
     def process_pipeline_chain(self, data: Any) -> None:
         print("Pipeline A -> Pipeline B -> Pipeline C")
-        print("Data flow: Raw -> Processed -> Analyzed -> Stored")
+        result = data
         start = time.time()
         try:
             result = data
             for adapter in [self.json_adapter, self.csv_adapter, self.stream_adapter]:
-                adapter.process(result)
+                result = adapter.process(result)
             end = time.time()
             print("Data flow: Raw -> Processed -> Analyzed -> Stored")
             print("Chain result: 100 records processed through 3-stage pipeline")
@@ -152,22 +158,15 @@ class NexusManager:
             print("Recovery initiated: Switching to backup processor")
             print("Recovery successful: Pipeline restored, processing resumed")
 
+
 if __name__ == "__main__":
     print("=== CODE NEXUS - ENTERPRISE PIPELINE SYSTEM ===\n")
     nexus_manager: NexusManager = NexusManager()
+
     print("\n=== Multi-Format Data Processing ===\n")
-    try:
-        nexus_manager.process_json({"temp":25, "type":"C"})
-    except Exception as e:
-        print(f"ERROR: {e}")
-    try:
-        nexus_manager.process_csv("csv_data")
-    except Exception as e:
-        print(f"ERROR: {e}")
-    try:
-        nexus_manager.process_stream("stream_data")
-    except Exception as e:
-        print(f"ERROR: {e}")
+    nexus_manager.process_json("JSON_DATA")
+    nexus_manager.process_csv("CSV_DATA")
+    nexus_manager.process_stream("STREAM_DATA")
 
     print("\n=== Pipeline Chaining Demo ===")
     nexus_manager.process_pipeline_chain("ok")

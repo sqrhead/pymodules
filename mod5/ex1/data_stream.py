@@ -29,10 +29,14 @@ class SensorStream(DataStream):
         self.total_reading: int = 0
         self.total_temperature: float = 0.0
         self.average_temperature: float = 0.0
+        self.type = "Sensor"
         print("\nInitializing Sensor Stream ...")
         print(f"Stream ID: {stream_id}, Type: Enviromental Data")
 
     def process_batch(self, data_batch: List[Any]) -> str:
+        self.total_reading = 0
+        self.total_temperature = 0.0
+        self.average_temperature = 0.0
         try:
             for k in data_batch:
                 self.total_reading += 1
@@ -80,10 +84,13 @@ class TransactionStream(DataStream):
         self.stream_id: str = stream_id
         self.net_flow: float = 0
         self.total_operations: int = 0
+        self.type = "Transaction"
         print("\nInitializing Transaction Stream...")
         print(f"Stream ID: {stream_id}, Type: Financial Data")
 
     def process_batch(self, data_batch: List[Any]) -> str:
+        self.net_flow = 0
+        self.total_operations = 0
         try:
             for index in data_batch:
                 self.total_operations += 1
@@ -108,12 +115,14 @@ class TransactionStream(DataStream):
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
         try:
-            if criteria == None:
+            if criteria is None:
                 return data_batch
             elif criteria == "sell":
-                return [item for item in data_batch if "sell" in item and item["sell"] > 100]
+                result = [item for item in data_batch if "sell" in item and item["sell"] > 100]
+                return result
             elif criteria == "buy":
-                return [item for item in data_batch if "buy" in  item and item["buy"] > 100]
+                result = [item for item in data_batch if "buy" in  item and item["buy"] > 100]
+                return result
             else:
                 raise Exception("Wrong criteria inputed: 'buy' or 'sell' valid")
         except KeyError as ke:
@@ -130,10 +139,13 @@ class EventStream(DataStream):
         self.stream_id: str = stream_id
         self.total_events: int = 0
         self.total_errors: int = 0
+        self.type = "Event"
         print("\nInitializing Event Stream...")
         print(f"Stream ID: {stream_id}, Type: System Events")
 
     def process_batch(self, data_batch: List[Any]) -> str:
+        self.total_errors = 0
+        self.total_events = 0
         try:
             for k in data_batch:
                 self.total_events += 1
@@ -158,10 +170,12 @@ class EventStream(DataStream):
 
     def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
         try:
-            if criteria == None:
+            if criteria is None:
                 return data_batch
             else:
-                return [item for item in data_batch if item == criteria]
+                result = [item for item in data_batch if item == criteria]
+                return result
+
         except Exception as e:
             print(f"ERROR: {e}")
             return []
@@ -204,17 +218,8 @@ class StreamProcessor:
                 print(f"\nBatch {batch_counter} result:")
                 for s in l:
                     data = s.get_stats()
-                    if isinstance(s, SensorStream) is True:
-                        for k in data:
-                            print(f"- Sensor data: {data[k]} {k}")
-                    elif isinstance(s, EventStream) is True:
-                        for k in data:
-                            print(f"- Event data: {data[k]} {k}")
-                    elif isinstance(s, TransactionStream) is True:
-                        for k in data:
-                            print(f"- Transaction data: {data[k]} {k}")
-                    else:
-                        raise Exception("WRONG STREAM INPUTED")
+                    for k in data:
+                        print(f"- {s.type} data: {data[k]} {k}")
         except Exception as e:
             print(f"ERROR: {e}")
 
@@ -226,11 +231,11 @@ class StreamProcessor:
             for list_stream in self.streams:
                 for stream in list_stream:
                     if isinstance(stream, SensorStream) is True:
-                        sensor_result = stream.filter_data(self.ssdata, "temp")
+                        sensor_result += stream.filter_data(self.ssdata, "temp")
                     elif isinstance(stream, TransactionStream) is True:
-                        trans_result = stream.filter_data(self.tsdata, "buy")
+                        trans_result += stream.filter_data(self.tsdata, "buy")
                     elif isinstance(stream, EventStream) is True:
-                        event_result = stream.filter_data(self.esdata, "error")
+                        event_result += stream.filter_data(self.esdata, "error")
                     else:
                         raise Exception("Wrong stream inputed")
         except Exception as e:
@@ -242,6 +247,7 @@ class StreamProcessor:
             f"{self.__len_res(trans_result)} large transaction, " +
             f"{self.__len_res(event_result)} important events"
         )
+
 
 if __name__ == "__main__":
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===")
