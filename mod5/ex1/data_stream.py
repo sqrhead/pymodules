@@ -8,7 +8,10 @@ class DataStream(ABC):
     def process_batch(self, data_batch: List[Any]) -> str:
         pass
 
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(
+            self, data_batch: List[Any], 
+            criteria: Optional[str] = None
+            ) -> List[Any]:
         try:
             if criteria is None:
                 return data_batch
@@ -59,8 +62,11 @@ class SensorStream(DataStream):
             "reading processed": self.tot_read,
         }
 
-    # Insert print to avoid 'isinstance()' is StreamProcessor
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(
+            self, 
+            data_batch: List[Any], 
+            criteria: Optional[str] = None
+            ) -> List[Any]:
         try:
             if criteria is None:
                 return data_batch
@@ -113,7 +119,11 @@ class TransactionStream(DataStream):
             "operations processed": self.tot_ops,
         }
 
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(
+            self, 
+            data_batch: List[Any], 
+            criteria: Optional[str] = None
+            ) -> List[Any]:
         try:
             if criteria is None:
                 return data_batch
@@ -179,7 +189,11 @@ class EventStream(DataStream):
             "events processed": self.tot_evt,
         }
 
-    def filter_data(self, data_batch: List[Any], criteria: Optional[str] = None) -> List[Any]:
+    def filter_data(
+            self, 
+            data_batch: List[Any], 
+            criteria: Optional[str] = None
+            ) -> List[Any]:
         try:
             if criteria is None:
                 return data_batch

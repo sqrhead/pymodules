@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Protocol, List, Dict, Union, Any
 import time
 
+
 class ProcessingStage(Protocol):
 
     def process(self, data: Any) -> Any:
@@ -13,7 +14,7 @@ class InputStage:
     def process(self, data: Any) -> Dict:
         if data is None:
             raise Exception("ERROR: InputStage fail!!")
-        return {"data" : data, "parsed": True}
+        return {"data": data, "parsed": True}
 
 
 class TransformStage:
@@ -40,7 +41,7 @@ class OutputStage:
 class ProcessingPipeline(ABC):
 
     def __init__(self) -> None:
-        self.stages: List[ProcessingStage]  = []
+        self.stages: List[ProcessingStage] = []
 
     def add_stage(self, stage: ProcessingStage) -> None:
         self.stages = self.stages + [stage]
@@ -69,7 +70,6 @@ class CSVAdapter(ProcessingPipeline):
         super().__init__()
         self.pipeline_id = pipeline_id
 
-
     def process(self, data: Any) -> Union[str, Any]:
         result = data
         for stage in self.stages:
@@ -83,13 +83,11 @@ class StreamAdapter(ProcessingPipeline):
         super().__init__()
         self.pipeline_id = pipeline_id
 
-
     def process(self, data: Any) -> Union[str, Any]:
         result = data
         for stage in self.stages:
             result = stage.process(result)
         return result
-
 
 
 class NexusManager:
@@ -105,14 +103,21 @@ class NexusManager:
         print("Stage 2: Data transformation and enrichment")
         print("Stage 3: Output formatting and delivery")
 
-        for adapt in [self.json_adapter, self.csv_adapter, self.stream_adapter]:
+        for adapt in [
+            self.json_adapter,
+            self.csv_adapter,
+            self.stream_adapter
+                ]:
             adapt.add_stage(InputStage())
             adapt.add_stage(TransformStage())
             adapt.add_stage(OutputStage())
 
     def process_json(self, data: Any) -> None:
 
-        print(f"Processing {self.json_adapter.pipeline_id} data through same pipeline...")
+        print(
+            f"Processing {self.json_adapter.pipeline_id} " +
+            "data through same pipeline..."
+        )
         try:
             print(f"Input: {data}")
             result = self.json_adapter.process(data)
@@ -122,7 +127,10 @@ class NexusManager:
             print(f"{e}")
 
     def process_csv(self, data: Any) -> None:
-        print(f"Processing {self.csv_adapter.pipeline_id} data through same pipeline...")
+        print(
+            f"\nProcessing {self.csv_adapter.pipeline_id} " +
+            "data through same pipeline..."
+            )
         try:
             print(f"Input: {data}")
             result = self.csv_adapter.process(data)
@@ -132,11 +140,14 @@ class NexusManager:
             print(f"{e}")
 
     def process_stream(self, data: Any) -> None:
-        print(f"Processing {self.stream_adapter.pipeline_id} data through same pipeline...")
+        print(
+            f"\nProcessing {self.stream_adapter.pipeline_id} " +
+            "data through same pipeline..."
+            )
         try:
             print(f"Input: {data}")
             result = self.stream_adapter.process(data)
-            print("Aggregated and filtered")
+            print("Transform: Aggregated and filtered")
             print(f"Output: {result}")
         except Exception as e:
             print(f"{e}")
@@ -147,12 +158,22 @@ class NexusManager:
         start = time.time()
         try:
             result = data
-            for adapter in [self.json_adapter, self.csv_adapter, self.stream_adapter]:
+            for adapter in [
+                self.json_adapter,
+                self.csv_adapter,
+                self.stream_adapter
+                    ]:
                 result = adapter.process(result)
             end = time.time()
             print("Data flow: Raw -> Processed -> Analyzed -> Stored")
-            print("Chain result: 100 records processed through 3-stage pipeline")
-            print(f"Performance: 95% efficiency, {(end - start):.6f} total processing time")
+            print(
+                "Chain result: 100 records processed " +
+                "through 3-stage pipeline"
+                )
+            print(
+                f"Performance: 95% efficiency, {(end - start):.6f}" +
+                " total processing time"
+                )
         except Exception as e:
             print(f"{e}")
             print("Recovery initiated: Switching to backup processor")
@@ -173,4 +194,3 @@ if __name__ == "__main__":
 
     print("\n=== Error Recovery Test ===")
     nexus_manager.process_pipeline_chain(None)
-    pass
