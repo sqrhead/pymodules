@@ -57,7 +57,6 @@ class PrizeFlower(FloweringPlant):
 
 class GardenManager:
     """ GardenManager class used to manage a gardens duh"""
-
     def __init__(self):
         """ Constructor """
         print("=== Garden Management System Demo ===\n")

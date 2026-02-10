@@ -9,7 +9,7 @@ class DataStream(ABC):
         pass
 
     def filter_data(
-            self, data_batch: List[Any], 
+            self, data_batch: List[Any],
             criteria: Optional[str] = None
             ) -> List[Any]:
         try:
@@ -63,8 +63,8 @@ class SensorStream(DataStream):
         }
 
     def filter_data(
-            self, 
-            data_batch: List[Any], 
+            self,
+            data_batch: List[Any],
             criteria: Optional[str] = None
             ) -> List[Any]:
         try:
@@ -120,8 +120,8 @@ class TransactionStream(DataStream):
         }
 
     def filter_data(
-            self, 
-            data_batch: List[Any], 
+            self,
+            data_batch: List[Any],
             criteria: Optional[str] = None
             ) -> List[Any]:
         try:
@@ -190,8 +190,8 @@ class EventStream(DataStream):
         }
 
     def filter_data(
-            self, 
-            data_batch: List[Any], 
+            self,
+            data_batch: List[Any],
             criteria: Optional[str] = None
             ) -> List[Any]:
         try:
