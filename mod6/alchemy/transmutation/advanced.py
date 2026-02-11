@@ -3,8 +3,11 @@ from ..potions import healing_potion
 
 
 def philosophers_stone() -> str:
-    return f"Philosopher’s stone created using {lead_to_gold()} " +\
-        f"and {healing_potion()}"
+    try:
+        return f"Philosopher’s stone created using {lead_to_gold()} " +\
+            f"and {healing_potion()}"
+    except Exception:
+        return "ERROR: 'advanced.py'"
 
 
 def elixir_of_life() -> str:
