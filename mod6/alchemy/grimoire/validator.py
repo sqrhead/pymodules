@@ -1,9 +1,13 @@
-
+import re
 
 def validate_ingredients(ingredients: str) -> str:
-    if ingredients is "fire" or ingredients is "water":
-        return f"{ingredients} - VALID"
-    elif ingredients is "earth" or ingredients is "air":
+    res: list = []
+
+    for i in ["fire", "water", "earth", "air"]:
+        res += re.findall(i, ingredients)
+
+    if len(res) > 0:
         return f"{ingredients} - VALID"
     else:
         return f"{ingredients} - INVALID"
+
