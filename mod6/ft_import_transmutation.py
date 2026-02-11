@@ -15,7 +15,7 @@ if __name__ == "__main__":
     print(f"heal(): {heal()}")
 
     print("\nMethod 4 - Multiple imports:")
-    from alchemy.elements import create_fire,create_earth
+    from alchemy.elements import create_fire, create_earth
     from alchemy.potions import strength_potion
     print(f"create_earth(): {create_earth()}")
     print(f"create_fire(): {create_fire()}")

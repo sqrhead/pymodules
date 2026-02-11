@@ -1,5 +1,6 @@
 import re
 
+
 def validate_ingredients(ingredients: str) -> str:
     res: list = []
 
@@ -10,4 +11,3 @@ def validate_ingredients(ingredients: str) -> str:
         return f"{ingredients} - VALID"
     else:
         return f"{ingredients} - INVALID"
-
