@@ -1,4 +1,4 @@
-from ex0 import *
+from ex0 import CreatureCard
 
 if __name__ == "__main__":
     game_state: dict = {
@@ -23,4 +23,4 @@ if __name__ == "__main__":
     print(f"\nTesting insufficient mana ({game_state["mana"]} available):")
     result_play = cc.play(game_state)
 
-    print("Abstract pattern successfully demonstrated!")
+    print("\nAbstract pattern successfully demonstrated!")

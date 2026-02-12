@@ -1,6 +1,7 @@
 from ex0.Card import Card
 
 class CreatureCard(Card):
+
     def __init__(self, name: str, cost: int, rarity: str, attack: int, health: int) -> None:
         super().__init__(name, cost, rarity)
         if attack < 0:
@@ -31,14 +32,8 @@ class CreatureCard(Card):
             print("[ERROR] - GAME_STATE_ERROR")
             return {}
 
-    def is_playable(self, avaible_mana) -> bool:
-        if avaible_mana > self.cost:
-            return True
-        else:
-            return False
 
-
-    def attack_target(self, target: "CreatureCard") -> dict: # target type ?
+    def attack_target(self, target: Card) -> dict:
         resolved = False
         target.health -= self.attack
         if target.health <= 0:
@@ -49,6 +44,7 @@ class CreatureCard(Card):
             "damage_dealt": self.attack,
             "combat_resolved": resolved
         }
+
 
     def get_card_info(self) -> dict:
         return {

@@ -9,10 +9,17 @@ class Card(ABC):
 
     @abstractmethod
     def play(self, game_state: dict) -> dict:
-        pass
+        ...
 
     def get_card_info(self) -> dict:
-        pass
+        return {
+            "name": self.name,
+            "cost": self.cost,
+            "rarity": self.rarity
+        }
 
     def is_playable(self, avaible_mana: int) -> bool:
-        pass
+        if avaible_mana > self.cost:
+            return True
+        else:
+            return False
