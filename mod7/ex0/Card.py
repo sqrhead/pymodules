@@ -2,14 +2,17 @@ from abc import ABC, abstractmethod
 
 class Card(ABC):
     def __init__(self, name: str, cost: int, rarity: str) -> None:
-        pass 
+        self.name = name
+        self.cost = cost
+        self.rarity = rarity
+        pass
 
     @abstractmethod
     def play(self, game_state: dict) -> dict:
-        pass 
+        pass
 
     def get_card_info(self) -> dict:
-        pass 
+        pass
 
     def is_playable(self, avaible_mana: int) -> bool:
-        pass 
+        pass
