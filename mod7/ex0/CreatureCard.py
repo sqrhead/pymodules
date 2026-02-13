@@ -1,5 +1,5 @@
 from ex0.Card import Card
-
+from ex0.Card import CardType
 class CreatureCard(Card):
 
     def __init__(self, name: str, cost: int, rarity: str, attack: int, health: int) -> None:
@@ -12,7 +12,7 @@ class CreatureCard(Card):
             self.health = 1
         else:
             self.health = health
-        self.type = "Creature"
+        self.type: CardType = CardType.Creature.name
 
 
     def play(self, game_state: dict) -> dict:

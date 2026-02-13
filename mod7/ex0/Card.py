@@ -1,11 +1,16 @@
 from abc import ABC, abstractmethod
+from enum import Enum
+
+class CardType(Enum):
+    Nothing = 0
+    Creature = 1
+
 
 class Card(ABC):
     def __init__(self, name: str, cost: int, rarity: str) -> None:
         self.name = name
         self.cost = cost
         self.rarity = rarity
-        pass
 
     @abstractmethod
     def play(self, game_state: dict) -> dict:
