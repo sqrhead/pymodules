@@ -1,5 +1,6 @@
 from ex0.Card import Card
 from ex0.Card import CardType
+
 class CreatureCard(Card):
 
     def __init__(self, name: str, cost: int, rarity: str, attack: int, health: int) -> None:
@@ -17,17 +18,24 @@ class CreatureCard(Card):
 
     def play(self, game_state: dict) -> dict:
         try:
-            if self.is_playable(game_state["mana"]) is True:
-                print("Playable: True")
+            playable = self.is_playable(game_state["mana"])
+
+            if playable is True:
                 game_state["mana"] -= self.cost
-            else:
+
+            if playable is True and game_state["playable"]:
+                print("Playable: True")
+            elif playable is False and game_state["playable"]:
                 print("Playable: False")
+
             return {
                 "card played": self.name,
                 "mana used": self.cost,
                 "effect": "Creature summoned to the battlefield"
             }
-
+        except KeyError as ke:
+            print(f"[ERROR]: {ke}")
+            return {}
         except Exception:
             print("[ERROR] - GAME_STATE_ERROR")
             return {}
