@@ -11,3 +11,5 @@ if __name__ == "__main__":
     ge.configure_engine(fcf, aggst)
     ge.simulate_turn()
     ge.get_engine_status()
+
+    print("\nAbstract Factory + Strategy Pattern: Maximum flexibility achieved!")

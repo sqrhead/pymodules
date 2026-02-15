@@ -1,4 +1,5 @@
 from ex0.Card import Card
+from ex0.Card import CardType
 from ex0.CreatureCard import CreatureCard
 
 from ex1.ArtifactCard import ArtifactCard
@@ -6,14 +7,29 @@ from ex1.SpellCard import SpellCard
 from ex1.Deck import Deck
 
 from ex2.EliteCard import EliteCard
+from ex2.Combatable import Combatable
+from ex2.Magical import Magical
 
-from ex3 import *
+
+from ex3.AggressiveStrategy import AggressiveStrategy
+from ex3.CardFactory import CardFactory
+from ex3.FantasyCardFactory import FantasyCardFactory
+from ex3.GameEngine import GameEngine
+from ex3.GameStrategy import GameStrategy
 
 __all__ = [
     "Card",
+    "CardType",
     "CreatureCard",
     "ArtifactCard",
     "SpellCard",
     "Deck",
-    "EliteCard"
+    "EliteCard",
+    "Combatable",
+    "Magical",
+    "AggressiveStrategy",
+    "CardFactory",
+    "FantasyCardFactory",
+    "GameEngine",
+    "GameStrategy"
     ]
