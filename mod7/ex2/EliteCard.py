@@ -22,6 +22,7 @@ class EliteCard(Card, Combatable, Magical):
                 'play', 'get_card_info', 'is_playable'
             ]
         }
+
     # Combatable
     def attack(self, target: Card) -> dict:
         try:

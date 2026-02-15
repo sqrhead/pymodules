@@ -7,6 +7,7 @@ from ex1.Deck import Deck
 
 from ex2.EliteCard import EliteCard
 
+from ex3 import *
 
 __all__ = [
     "Card",
