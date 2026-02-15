@@ -10,12 +10,15 @@ from ex2.EliteCard import EliteCard
 from ex2.Combatable import Combatable
 from ex2.Magical import Magical
 
-
 from ex3.AggressiveStrategy import AggressiveStrategy
 from ex3.CardFactory import CardFactory
 from ex3.FantasyCardFactory import FantasyCardFactory
 from ex3.GameEngine import GameEngine
 from ex3.GameStrategy import GameStrategy
+
+from ex4.Rankable import Rankable
+from ex4.TournamentCard import TournamentCard
+from ex4.TournamentPlatform import TournamentPlatform
 
 __all__ = [
     "Card",
@@ -31,5 +34,8 @@ __all__ = [
     "CardFactory",
     "FantasyCardFactory",
     "GameEngine",
-    "GameStrategy"
+    "GameStrategy",
+    "Rankable",
+    "TournamentCard",
+    "TournamentPlatform"
     ]

@@ -9,7 +9,7 @@ if __name__ == "__main__":
         "playable": False,
         "elite": EliteCard("Arcane Warrior", 5, "Legendary"),
         "defender": CreatureCard("Enemy", 1, "None", 1, 5),
-        "targets" : [
+        "targets": [
             CreatureCard("Enemy1", 1, "None", 1, 5),
             CreatureCard("Enemy2", 1, "None", 1, 5),
         ],
@@ -28,7 +28,9 @@ if __name__ == "__main__":
         print(f"Defence result: {elite.defend(5)}")
 
         print("\nMagic phase:")
-        print(f"Spell cast: {elite.cast_spell('Fire Ball', gs.get('targets'))}")
+        print(
+            f"Spell cast: {elite.cast_spell('Fire Ball', gs.get('targets'))}"
+            )
         print(f"Mana channel: {elite.channel_mana(5)}")
 
         print("\nMultiple interface implementation successful!")

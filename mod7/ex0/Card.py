@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
+
 class CardType(Enum):
     Base = 0
     Creature = 1
     Spell = 2
     Artifact = 3
     Elite = 4
+
 
 class Card(ABC):
     def __init__(self, name: str, cost: int, rarity: str) -> None:

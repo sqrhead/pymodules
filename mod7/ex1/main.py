@@ -1,4 +1,9 @@
-from ex1 import *
+from ex1.ArtifactCard import ArtifactCard
+from ex1.Deck import Deck
+from ex1.SpellCard import SpellCard
+from ex0.CreatureCard import CreatureCard
+from ex0.Card import Card
+
 
 if __name__ == "__main__":
     print("=== DataDeck Deck Builder ===")
@@ -11,9 +16,21 @@ if __name__ == "__main__":
 
     try:
         print("\nBuilding deck with different card types...")
-        gs['deck'].add_card(CreatureCard("Fire Dragon", 5, "Legendary", attack=7, health=10))
-        gs['deck'].add_card(SpellCard("Lightning Bolt", 3, "Normal", "Deal 3 damage to target"))
-        gs['deck'].add_card(ArtifactCard("Mana Crystal", 2, "Rare", 5, "Permanent +1 mana per turn"))
+        gs['deck'].add_card(
+            CreatureCard(
+                "Fire Dragon", 5, "Legendary", attack=7, health=10
+                )
+            )
+        gs['deck'].add_card(
+            SpellCard(
+                "Lightning Bolt", 3, "Normal", "Deal 3 damage to target"
+                )
+            )
+        gs['deck'].add_card(
+            ArtifactCard(
+                "Mana Crystal", 2, "Rare", 5, "Permanent +1 mana per turn"
+                )
+            )
 
         print(f"Deck stats: {gs['deck'].get_deck_stats()}")
 

@@ -3,6 +3,7 @@ from ex3.CardFactory import CardFactory
 # from ex3.AggressiveStrategy import AggressiveStrategy
 # from ex3.FantasyCardFactory import FantasyCardFactory
 
+
 class GameEngine:
     def __init__(self):
         self.battlefield: dict = {
@@ -25,14 +26,21 @@ class GameEngine:
         self.current_factory: CardFactory = None
         self.current_strategy: GameStrategy = None
 
-    def configure_engine(self, factory: CardFactory, strategy: GameStrategy) -> None:
-        self.current_factory = factory
-        self.current_strategy = strategy
-        print("\nConfiguring Fantasy Card Game...")
-        print(f"Factory: {factory.__class__.__name__}")
-        print(f"Strategy: {strategy.__class__.__name__}")
-        print(f"Avaible types: {factory.get_supported_types()}")
-        self.deck = factory.create_themed_deck(self.deck_size)
+    def configure_engine(
+            self,
+            factory: CardFactory,
+            strategy: GameStrategy
+            ) -> None:
+        try:
+            self.current_factory = factory
+            self.current_strategy = strategy
+            print("\nConfiguring Fantasy Card Game...")
+            print(f"Factory: {factory.__class__.__name__}")
+            print(f"Strategy: {strategy.__class__.__name__}")
+            print(f"Avaible types: {factory.get_supported_types()}")
+            self.deck = factory.create_themed_deck(self.deck_size)
+        except Exception:
+            print("Error: wrong factory/strategy provided")
         try:
             self.hand.append(self.deck["creatures"][0])
             self.hand.append(self.deck["spells"][0])
@@ -45,12 +53,14 @@ class GameEngine:
             return {}
         print("\nSimulating aggressive turn...")
 
-        print(f"Hand: [", end='')
+        print("Hand: [", end='')
         for x in self.hand:
             print(f"{x.name} ({x.cost}), ", end='')
         print("]")
         print("\nTurn execution:")
-        result = self.current_strategy.execute_turn(self.hand, self.battlefield)
+        result = self.current_strategy.execute_turn(
+            self.hand, self.battlefield
+            )
         try:
             self.total_damage += result["damage_dealt"]
         except Exception as e:

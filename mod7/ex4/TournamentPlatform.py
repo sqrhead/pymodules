@@ -1,6 +1,7 @@
 from ex4.TournamentCard import TournamentCard
 import random
 
+
 class TournamentPlatform:
     def __init__(self):
         self.cards: list = []
@@ -9,12 +10,15 @@ class TournamentPlatform:
     def register_card(self, card: TournamentCard) -> str:
         if card is None:
             return "Card not valid"
-        print(f"{card.name} ({card.id})")
-        print(f"- Intefaces: {card.interfaces}")
-        print(f"- Rating: {card.rating}")
-        print(f"- Record: {card.win} - {card.losses}")
-        self.cards.append(card)
-        return "Card Valid"
+        try:
+            print(f"{card.name} ({card.id})")
+            print(f"- Intefaces: {card.interfaces}")
+            print(f"- Rating: {card.rating}")
+            print(f"- Record: {card.win} - {card.losses}")
+            self.cards.append(card)
+            return "Card Valid"
+        except Exception:
+            print("Card not valid")
 
     def create_match(self, card1_id: str, card2_id: str) -> dict:
         cards_match: list = []
@@ -49,11 +53,10 @@ class TournamentPlatform:
 
         return {
             'winner': winner_card.name,
-            'loser' : loser_card.name,
+            'loser': loser_card.name,
             'winner rating': winner_card.rating,
             'loser rating': loser_card.rating,
         }
-
 
     def get_leaderboard(self) -> list:
         self.cards.sort(key=lambda card: card.rating, reverse=True)

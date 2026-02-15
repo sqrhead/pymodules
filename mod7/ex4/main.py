@@ -2,10 +2,7 @@ from ex4.TournamentPlatform import TournamentPlatform
 from ex4.TournamentCard import TournamentCard
 
 if __name__ == "__main__":
-    # Game State
-    gs: dict = {
-        "mana": 100
-    }
+
     print("=== DataDeck Tournament Platform ===")
     print("\nRegistering Tournament Cards...")
 
@@ -25,7 +22,8 @@ if __name__ == "__main__":
         stats_comb = card.get_combat_stats()
         print(
             f"{index}. {card.name} - "
-            f"Rating: {card.get_tournament_stats()} ({stats_comb['win']}-{stats_comb['losses']})"
+            f"Rating: {card.get_tournament_stats()} "
+            f"({stats_comb['win']}-{stats_comb['losses']})"
             )
 
     print("\nPlatform Report:")

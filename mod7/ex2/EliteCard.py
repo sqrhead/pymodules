@@ -39,7 +39,7 @@ class EliteCard(Card, Combatable, Magical):
     def defend(self, incoming_damage: int) -> dict:
         if incoming_damage <= 0:
             incoming_damage = 1
-        block: int = (incoming_damage + 1) /  2
+        block: int = (incoming_damage + 1) / 2
         return {
             "defender": self.name,
             "damage_taken": incoming_damage - block,
@@ -48,7 +48,7 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def get_combat_stats(self) -> dict:
-         return {
+        return {
             "cap": [
                 'attack', 'defend', 'get_combat_stats'
             ]
@@ -62,7 +62,7 @@ class EliteCard(Card, Combatable, Magical):
                 target_res.append(x.name)
         return {
             "caster": self.name,
-            "spell" : spell_name,
+            "spell": spell_name,
             "targets": target_res,
             "mana_used": 4
         }
@@ -76,7 +76,7 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def get_magic_stats(self) -> dict:
-         return {
+        return {
             "cap": [
                 'cast_spell', 'channel_mana', 'get_magic_stats'
             ]

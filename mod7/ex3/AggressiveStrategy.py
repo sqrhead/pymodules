@@ -1,6 +1,5 @@
 from ex3.GameStrategy import GameStrategy
 from ex0.CreatureCard import CreatureCard
-from ex0.Card import Card
 
 
 class AggressiveStrategy(GameStrategy):
@@ -26,7 +25,9 @@ class AggressiveStrategy(GameStrategy):
             print("ERROR: PROBLEM AT FINDING THE LOWEST MANA CREATURE")
 
         try:
-            targets: list = self.prioritize_targets(battlefield["enemy"]["creatures"])
+            targets: list = self.prioritize_targets(
+                battlefield["enemy"]["creatures"]
+                )
             if len(targets) < 1:
                 targets += [battlefield["enemy"]["name"]]
         except Exception as e:
@@ -35,7 +36,7 @@ class AggressiveStrategy(GameStrategy):
 
         return {
             'card_played': low_cost_cards,
-            'mana_used' : mana_used,
+            'mana_used': mana_used,
             'targets_attacked': targets,
             'damage_dealt': damage_dealt
 
@@ -45,5 +46,9 @@ class AggressiveStrategy(GameStrategy):
         return "Aggressive Strategy"
 
     def prioritize_targets(self, available_targets: list) -> list:
-        prio: list = [item for item in available_targets if isinstance(item, CreatureCard)]
+        prio: list = [
+            item
+            for item in available_targets
+            if isinstance(item, CreatureCard)
+            ]
         return prio

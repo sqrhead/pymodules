@@ -3,8 +3,20 @@ from ex0 import CreatureCard
 if __name__ == "__main__":
     gs: dict = {
         "mana": 8,
-        "creature": CreatureCard("Fire Dragon", cost=5, rarity="Legendary", attack=7, health=10),
-        "target": CreatureCard("Goblin Warrior", cost=1, rarity="Normal", attack=1, health=3),
+        "creature": CreatureCard(
+            "Fire Dragon",
+            cost=5,
+            rarity="Legendary",
+            attack=7,
+            health=10
+            ),
+        "target": CreatureCard(
+            "Goblin Warrior",
+            cost=1,
+            rarity="Normal",
+            attack=1,
+            health=3
+            ),
         "playable": True,
     }
 

@@ -3,13 +3,14 @@ from ex2.Combatable import Combatable
 from ex4.Rankable import Rankable
 import random
 
+
 class TournamentCard(Card, Combatable, Rankable):
 
     def __init__(self, name: str, cost: int, rarity: str) -> None:
         super().__init__(name, cost, rarity)
         self.id = name.upper() + "_ID"
         self.interfaces: list = ['Card', 'Combatable', 'Rankable']
-        self.rating: int = random.randint(0,3000)
+        self.rating: int = random.randint(0, 3000)
         self.win: int = 0
         self.losses: int = 0
 
@@ -27,8 +28,6 @@ class TournamentCard(Card, Combatable, Rankable):
         except Exception as e:
             print("Error in play()[TournamentCard.py]")
             print(f"Error message: {e}")
-
-
 
     # Combatable
     def attack(self, target: Card) -> dict:
@@ -61,7 +60,7 @@ class TournamentCard(Card, Combatable, Rankable):
 
     # Rankable
     def calculate_rating(self) -> int:
-        self.rating += random.randint(10,20)
+        self.rating += random.randint(10, 20)
         return self.rating
 
     # wtf
