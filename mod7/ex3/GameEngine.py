@@ -44,6 +44,7 @@ class GameEngine:
         try:
             self.hand.append(self.deck["creatures"][0])
             self.hand.append(self.deck["spells"][0])
+            self.hand.append(self.deck["artifacts"][0])
         except Exception as e:
             print(f"Error: {e}")
 
