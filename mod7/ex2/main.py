@@ -16,9 +16,9 @@ if __name__ == "__main__":
     }
     try:
         print("\nEliteCard capabilities:")
-        print(f"- Card: {gs.get("elite").get_card_info().get("cap")}")
-        print(f"- Combatable: {gs.get("elite").get_combat_stats().get("cap")}")
-        print(f"- Magical: {gs.get("elite").get_magic_stats().get("cap")}")
+        print(f"- Card: {gs.get('elite').get_card_info().get('cap')}")
+        print(f"- Combatable: {gs.get('elite').get_combat_stats().get('cap')}")
+        print(f"- Magical: {gs.get('elite').get_magic_stats().get('cap')}")
 
         gs.get('elite').play(gs)
 
