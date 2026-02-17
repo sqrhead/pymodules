@@ -20,7 +20,12 @@ if __name__ == "__main__":
         import matplotlib as mat
         from matplotlib import pyplot as plt
         print(f"[OK] matplotlib ({mat.__version__}) - Visualization ready")
+        print("\nAnalyzing Matrix data...")
+        print("Processing 1000 data points...")
+        print("Generating visualization...")
         panda_data.plot()
         plt.savefig('matrix_analysis.png')
+        print("\nAnalysis complete!")
+        print("Results saved to: matrix_analysis.png}")
     except Exception:
         print("[NOT OK] matplotlib missing - [None]")
