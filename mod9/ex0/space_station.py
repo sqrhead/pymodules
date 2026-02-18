@@ -7,6 +7,7 @@ except ImportError:
 from datetime import datetime
 from typing import Optional
 
+
 class SpaceStation(BaseModel):
     station_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=1, max_length=50)
@@ -15,8 +16,7 @@ class SpaceStation(BaseModel):
     oxygen_level: float = Field(ge=0.0, le=100.0)
     last_maintenance: datetime
     is_operational: bool = Field(default=True)
-    notes: Optional[str] = None
-
+    notes: Optional[str] = None # None or its not optional to put
 
 def main() -> None:
     print("========================================")
@@ -27,8 +27,7 @@ def main() -> None:
             crew_size=6,
             power_level=85.5,
             oxygen_level=92.3,
-            last_maintenance=datetime(1998,4,26),
-            is_operational=True,
+            last_maintenance=datetime(1998, 4, 26),
         )
         print("Valid station created:")
         print(f"ID: {space_station_valid.station_id}")
@@ -37,9 +36,9 @@ def main() -> None:
         print(f"Power: {space_station_valid.power_level}%")
         print(f"Oxygen: {space_station_valid.oxygen_level}%")
         if space_station_valid.is_operational:
-            print(f"Status: Operational")
+            print("Status: Operational")
         else:
-            print(f"Status: Not Operational")
+            print("Status: Not Operational")
     except ValidationError as ve:
         print(f"{ve}")
     print("========================================")
@@ -51,16 +50,17 @@ def main() -> None:
             crew_size=21,
             power_level=85.5,
             oxygen_level=92.3,
-            last_maintenance=datetime(1998,4,26),
+            last_maintenance=datetime(1998, 4, 26),
             is_operational=True,
         )
+        print(f"{space_station__not_valid.name}")
     except ValidationError as ve:
-        for error in ve.errors():
-            field = error["loc"][0]
-            msg = error["msg"]
-            print(f"{field}: {msg}")
+        # for error in ve.errors():
+        #     field = error["loc"][0]
+        #     msg = error["msg"]
+        #     print(f"{field}: {msg}")
+        print(f"{ve}")
 
 if __name__ == "__main__":
     print("Space Station Data Validation")
-
     main()
