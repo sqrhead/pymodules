@@ -20,6 +20,7 @@ class SpaceStation(BaseModel):
 
 
 def main() -> None:
+    print("Space Station Data Validation")
     print("========================================")
     try:
         space_station_valid: SpaceStation = SpaceStation(
@@ -64,5 +65,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    print("Space Station Data Validation")
     main()
