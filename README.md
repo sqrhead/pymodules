@@ -15,3 +15,7 @@
 
 [ Deactivate venv ]
 - deactivate
+
+### PIP ###
+[ pip uninstall package ]
+- pip uninstall package_name

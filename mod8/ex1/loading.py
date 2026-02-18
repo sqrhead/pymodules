@@ -1,7 +1,10 @@
+# create venv and install libraries with pip/poetry
 
 if __name__ == "__main__":
     print("LOADING STATUS: Loading programs...\n")
     print("Checking dependencies:")
+    data = None
+    panda_data = None
     try:
         import requests as req
         print(f"[OK] requests ({req.__version__}) - Network access ready")
@@ -10,7 +13,11 @@ if __name__ == "__main__":
         print("[NOT OK] requests missing - [None]")
     try:
         import numpy as np
-        data = np.random.rand(10, 2)
+        data = np.random.rand(1000, 2)
+    except Exception:
+        print("[NOT OK] numpy missing - [None]")
+
+    try:
         import pandas as pd
         print(f"[OK] pandas ({pd.__version__})- Data manipulation ready")
         panda_data = pd.DataFrame(data)
