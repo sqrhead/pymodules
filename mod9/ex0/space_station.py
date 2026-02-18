@@ -16,7 +16,8 @@ class SpaceStation(BaseModel):
     oxygen_level: float = Field(ge=0.0, le=100.0)
     last_maintenance: datetime
     is_operational: bool = Field(default=True)
-    notes: Optional[str] = None # None or its not optional to put
+    notes: Optional[str] = Field(default=None, max_length=200)
+
 
 def main() -> None:
     print("========================================")
@@ -60,6 +61,7 @@ def main() -> None:
         #     msg = error["msg"]
         #     print(f"{field}: {msg}")
         print(f"{ve}")
+
 
 if __name__ == "__main__":
     print("Space Station Data Validation")
