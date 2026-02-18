@@ -12,18 +12,22 @@ if __name__ == "__main__":
     except Exception:
         print("[NOT OK] requests missing - [None]")
     try:
+        # numpy is a math library
         import numpy as np
         data = np.random.rand(1000, 2)
     except Exception:
         print("[NOT OK] numpy missing - [None]")
 
     try:
+        # pandas is a manipulation data library
         import pandas as pd
         print(f"[OK] pandas ({pd.__version__})- Data manipulation ready")
         panda_data = pd.DataFrame(data)
     except Exception:
         print("[NOT OK] panda missing - [None]")
     try:
+        # matplotlib let you do cool stuff with data
+        # like visualization in different way
         import matplotlib as mat
         from matplotlib import pyplot as plt
         print(f"[OK] matplotlib ({mat.__version__}) - Visualization ready")

@@ -1,14 +1,14 @@
 import sys
 import os
 import site
-# Authorized
-# sys, os, site modules, print()
 
 if __name__ == "__main__":
 
-    # check if inside virtual env
+    # os.environ is a dictionary like variable
+    # that lets you check/change enviroments variables
     if 'VIRTUAL_ENV' in os.environ:
         print("MATRIX STATUS: Welcome to the construct")
+        # sys.executable gives you the current interpreter python is using
         print(f"\nCurrent python: {sys.executable}")
         venv_path = os.environ.get('VIRTUAL_ENV')
         print(f"Virtual Enviroment: {os.path.basename(venv_path)}")
@@ -18,6 +18,7 @@ if __name__ == "__main__":
         print("Safe to install packages without affecting the global system.")
 
         try:
+            # site.getsitepackages gets you a list of path where your packages
             print(f"\nPackage installation path: \n{site.getsitepackages()[0]}")
         except Exception:
             print("Error: site.getsitepackages() error")

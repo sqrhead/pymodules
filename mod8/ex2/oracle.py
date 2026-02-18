@@ -1,9 +1,12 @@
 import os
 
+#python-dotenv
 if __name__ == "__main__":
     print('ORACLE STATUS: Reading the Matrix...')
     trigger: bool = True
     try:
+        # dotenv gives access to the manipolation and reading of .env files
+        # and this way you can avoid hardcoding important data
         from dotenv import load_dotenv
         load_dotenv()
     except Exception:
