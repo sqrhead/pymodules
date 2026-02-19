@@ -1,4 +1,7 @@
 # create venv and install libraries with pip/poetry
+# import importlib
+# forgot to add a requirement of the subject in this project
+# < Show in the output, what you are using between pip & poetry >
 
 if __name__ == "__main__":
     print("LOADING STATUS: Loading programs...\n")
@@ -8,7 +11,6 @@ if __name__ == "__main__":
     try:
         import requests as req
         print(f"[OK] requests ({req.__version__}) - Network access ready")
-
     except Exception:
         print("[NOT OK] requests missing - [None]")
     try:
