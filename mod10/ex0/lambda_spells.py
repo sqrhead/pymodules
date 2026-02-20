@@ -65,4 +65,4 @@ if __name__ == "__main__":
         {'n': 30},
         {'n': 40},
     ]
-    print(f"test : {sum(lambda x:x['n'], dd)}")
+    print(f"test : {sum(map(lambda x:x['n'], dd)) / len(dd)}")
