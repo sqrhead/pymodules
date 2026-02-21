@@ -2,27 +2,28 @@
 def artifact_sorter(artifacts: list[dict]) -> list[dict]:
     return sorted(artifacts, key=lambda power:power['power'], reverse=True)
 
+# is this what they want ???
+#artifact_sorter = lambda artifacts: sorted(artifacts, key=lambda power:power['power'], reverse=True)
+
 def power_filter(mages: list[dict], min_power: int) -> list[dict]:
-    return filter(lambda m:m['power'] >= min_power, mages)
+    return list(filter(lambda m:m['power'] >= min_power, mages))
 
 def spell_transformer(spells: list[str]) -> list[str]:
-    return map(lambda str:'* ' + str + ' *', spells)
+    return list(map(lambda spellname:'* ' + spellname + ' *', spells))
 
-# min() max() sum() find lower power mage, highest power mage, average power 
+# min() max() sum() find lower power mage, highest power mage, average power
 def mage_stats(mages: list[dict]) -> dict:
-    result: dict = {
-        'max_power': 0,
-        'min_power': 0,
-        'avg_power': 0.00
-    
-    }
-    result['max_power'] = max(mages, key=lambda x:x["power"])["power"]
-    result['min_power'] = min(mages, key=lambda x:x["power"])["power"]
-    # result['avg_power'] = sum(lambda mages, x: x["power"]) 
+    result = {}
+    if not mages:
+        return {}
+    lmb = list(map(lambda x:x['power'], mages))
+    result['max_power'] = max(lmb)
+    result['min_power'] = min(lmb)
+    result['avg_power'] = round(sum(lmb) / len(mages), 2) # .2f
 
     return result
 
-# input not checked, remember try/except 
+# input not checked, remember try/except
 if __name__ == "__main__":
 
     artifact_data: list = [
@@ -59,10 +60,3 @@ if __name__ == "__main__":
 
     print("--- Mage Power ---------------")
     print(f"{mage_stats(mage_data)}")
-    dd = [
-        {'n': 10},
-        {'n': 20},
-        {'n': 30},
-        {'n': 40},
-    ]
-    print(f"test : {sum(map(lambda x:x['n'], dd)) / len(dd)}")
