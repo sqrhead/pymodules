@@ -36,7 +36,6 @@ def condition_func(target: str) -> bool:
         return False
     return True
 
-
 def conditional_caster(condition: Callable, spell: Callable) -> Callable:
     def cond(*args, **kwargs) -> str:
         if condition(*args, **kwargs):
@@ -59,7 +58,7 @@ if __name__ == "__main__":
     try:
         print("\nTesting spell combiner ...")
         result = spell_combiner(spell_fireball, spell_heal)
-        print(f"{result('Dragwon')}")
+        print(f"Combined spell result : {result('Dragwon')[0]}, {result('Dragwon')[1]}")
     except Exception:
         print("error: wrong data provided for spell combination")
 
