@@ -11,15 +11,16 @@ def spell_timer(func: Callable) -> Callable:
     def wrapper(*args: Any) -> Any:
         start_t = time()
         print(f'Casting {func.__name__} ...')
-        sleep(.1)
+        result = func(*args)
         end_t = time()
         print(f'Spell completed in {round(end_t - start_t, 3)} seconds')
-        return func()
+        return result
     return wrapper
 
 
 @spell_timer
 def fireball() -> str:
+    sleep(0.1)
     return 'fireball cast'
 
 

@@ -110,12 +110,9 @@ if __name__ == "__main__":
     try:
         print("\nTesting spell dispatcher ...")
         res = spell_dispatcher()
-        res2 = spell_dispatcher()
-        res3 = spell_dispatcher()
-        res4 = spell_dispatcher()
         print(f"{res(["Fireball", "Water Splash", "Earth Stomp"])}")
-        print(f"{res2('Fire')} the dagger")
-        print(f"{res3(1.2)}")
-        print(f"Fireball {res4(12)}")
+        print(f"{res('Fire')} the dagger")
+        print(f"{res(1.2)}")
+        print(f"Fireball {res(12)}")
     except Exception:
         print('error: on spell dispatcher')

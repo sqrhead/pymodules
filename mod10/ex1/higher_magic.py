@@ -41,7 +41,7 @@ def power_amplifier(base_spell: Callable, multiplier: int) -> Callable:
         raise Exception("error: base_spell not function")
 
     def amplify(*args: Any) -> tuple:
-        return (base_spell(*args), base_spell(*args) * multiplier)
+        return (base_spell(*args) * multiplier)
     return amplify
 
 
@@ -94,8 +94,9 @@ if __name__ == "__main__":
     try:
         print("\nTesting power amplifier ...")
         result_ampl = power_amplifier(fireball_damage, 5)
-        tmp = result_ampl(5)
-        print(f"Original: {tmp[0]}, Amplified: {tmp[1]}")
+        original = fireball_damage(10)
+        ampl = result_ampl(10)
+        print(f"Original: {original}, Amplified: {ampl}")
     except Exception as e:
         print('error: wrong data provided for power amplifier')
         print(f'{e}')
