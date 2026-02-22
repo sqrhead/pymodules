@@ -1,8 +1,10 @@
 from collections.abc import Callable
 from typing import Any
 
+
 def mage_counter() -> Callable:
     counter = 0
+
     def internal_counter() -> int:
         nonlocal counter
         counter += 1
@@ -12,6 +14,7 @@ def mage_counter() -> Callable:
 
 def spell_accumulator(initial_power: int) -> Callable:
     total_power = initial_power
+
     def accumulate() -> int:
         nonlocal total_power
         total_power += 10
@@ -26,18 +29,17 @@ def enchantment_factory(enchantment_type: str) -> Callable:
 
 
 def memory_vault() -> dict[str, Callable]:
-    result  = {}
+    result = {}
 
     def store(key: Any, value: Any) -> None:
-        result [key] = value
+        result[key] = value
 
     def recall(key: Any) -> Any:
         try:
-            res = result [key]
+            res = result[key]
             return res
         except KeyError:
             return "Memory not found"
-
 
     return {
         'store': store,
@@ -46,26 +48,38 @@ def memory_vault() -> dict[str, Callable]:
 
 
 if __name__ == "__main__":
-    print("\nTesting mage counter ... ")
-    result = mage_counter()
-    print(f"Call 1: {result()}")
-    print(f"Call 2: {result()}")
-    print(f"Call 3: {result()}")
+    try:
+        print("\nTesting mage counter ... ")
+        result = mage_counter()
+        print(f"Call 1: {result()}")
+        print(f"Call 2: {result()}")
+        print(f"Call 3: {result()}")
+    except Exception:
+        print('error: mage counter wrong data')
 
-    print("\nTesting spell accumulator ... ")
-    result = spell_accumulator(0)
-    print(f"Power Call 1: {result()}")
-    print(f"Power Call 2: {result()}")
-    print(f"Power Call 3: {result()}")
+    try:
+        print("\nTesting spell accumulator ... ")
+        result = spell_accumulator(0)
+        print(f"Power Call 1: {result()}")
+        print(f"Power Call 2: {result()}")
+        print(f"Power Call 3: {result()}")
+    except Exception:
+        print('error: spell accumulator wrong data')
 
-    print("\nTesting enchantment factor  ... ")
-    result = enchantment_factory("Fire")
-    result2 = enchantment_factory("Frozen")
-    print(f"{result('Sword')}")
-    print(f"{result2('Shield')}")
+    try:
+        print("\nTesting enchantment factory  ... ")
+        result = enchantment_factory("Flaming")
+        result2 = enchantment_factory("Frozen")
+        print(f"{result('Sword')}")
+        print(f"{result2('Shield')}")
+    except Exception:
+        print('error: enchantment factory wrong data')
 
-    print("\nTesting memory vault  ... ")
-    result = memory_vault()
-    result['store']('key', 'value')
-    print(f"{result['recall']('key')}")
-    print(f"{result['recall']('key2')}")
+    try:
+        print("\nTesting memory vault  ... ")
+        result = memory_vault()
+        result['store']('key', 'value')
+        print(f"{result['recall']('key')}")
+        print(f"{result['recall']('key2')}")
+    except Exception:
+        print('error: memory vault wrong data')
